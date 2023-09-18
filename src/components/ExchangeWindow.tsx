@@ -133,7 +133,7 @@ const ExchangeWindow: React.FC = () => {
   const [searchCoinValue, setSearchCoinValue] = useState<string>('');
   const [walletValue, setWalletValue] = useState<string>('');
 
-  const [isAddressValid, setIsAddressValid] = useState<boolean | null>(null);
+  // const [isAddressValid, setIsAddressValid] = useState<boolean | null>(null);
 
   const [exchangeErorr, setExchangeErorr] = useState<{ message: string; min?: string; max?: string } | null>(null);
 
