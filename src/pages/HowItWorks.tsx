@@ -2,57 +2,60 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import ExchangeWindow from '@/components/ExchangeWindow';
 
-const arr = [{
-  id: 1,
-  title: 'Выберите валютную пару и установите сумму обмена.',
-  desc: 'Выбирайте из сотен монет и обменивайте любые суммы без ограничений.',
-  src: 'https://letsexchange.io/_nuxt/img/0.ed23c45.svg',
-}, {
-  id: 2,
-  title: 'Укажите адрес для получения выбранной монеты.',
-  desc: 'Добавьте тег назначения (мемо, message и т.д.), если это необходимо.',
-  src: 'https://letsexchange.io/_nuxt/img/1.8573689.svg',
-}, {
-  id: 3,
-  title: 'Введите и примените промокод, если он у вас есть.',
-  desc: 'Ваш бонус будет добавлен к общей сумме и отображен в поле "Вы получите".',
-  src: 'https://letsexchange.io/_nuxt/img/2.ff2be5e.svg',
-}, {
-  id: 4,
-  title: 'Выберите фиксированный или плавающий обменный курс и нажмите “Обменять”.',
-  desc: 'Фиксированная ставка исключает изменение курса в течение 30 минут, при плавающей ставке курс может колебаться.',
-  src: 'https://letsexchange.io/_nuxt/img/3.154cd62.svg',
-}, {
-  id: 5,
-  title: 'Проверьте и подтвердите детали обмена.',
-  desc: 'Если все данные верны, нажмите “Принять”.',
-  src: 'https://letsexchange.io/_nuxt/img/4.c8e8987.svg',
-}, {
-  id: 6,
-  title: 'Отправьте точную сумму на адрес депозита.',
-  desc: 'Отсканируйте QR-код или скопируйте адрес депозитного кошелька. Не забудьте добавить тег назначения, если необходимо.',
-  src: 'https://letsexchange.io/_nuxt/img/5.dfdafcc.svg',
-}, {
-  id: 7,
-  title: 'Подождите, пока произойдет обмен.',
-  desc: 'Нажмите “Уведомить меня”, чтобы получить на электронную почту сообщение о завершении обмена.',
-  src: 'https://letsexchange.io/_nuxt/img/6.9d6506a.svg',
-}, {
-  id: 8,
-  title: 'Ура! Ваш обмен выполнен',
-  desc: 'Запросите квитанцию, если необходимо; вы также можете зарегистрироваться и отслеживать историю своих обменов.',
-  src: 'https://letsexchange.io/_nuxt/img/7.e7529b5.svg',
-}, {
-  id: 9,
-  title: 'Давайте обменяем сейчас',
-  desc: 'Все готово для вашего легкого и безопасного обмена криптовалюты.',
-  src: null,
-}];
-
 const HowItWorks: React.FC = () => {
+  const { t } = useTranslation();
+
+  const arr = [{
+    id: 1,
+    title: t('how.1'),
+    desc: t('how.1desc'),
+    src: 'https://letsexchange.io/_nuxt/img/0.ed23c45.svg',
+  }, {
+    id: 2,
+    title: t('how.2'),
+    desc: t('how.2desc'),
+    src: 'https://letsexchange.io/_nuxt/img/1.8573689.svg',
+  }, {
+    id: 3,
+    title: t('how.3'),
+    desc: t('how.3desc'),
+    src: 'https://letsexchange.io/_nuxt/img/2.ff2be5e.svg',
+  }, {
+    id: 4,
+    title: t('how.4'),
+    desc: t('how.4desc'),
+    src: 'https://letsexchange.io/_nuxt/img/3.154cd62.svg',
+  }, {
+    id: 5,
+    title: t('how.5'),
+    desc: t('how.5desc'),
+    src: 'https://letsexchange.io/_nuxt/img/4.c8e8987.svg',
+  }, {
+    id: 6,
+    title: t('how.6'),
+    desc: t('how.6desc'),
+    src: 'https://letsexchange.io/_nuxt/img/5.dfdafcc.svg',
+  }, {
+    id: 7,
+    title: t('how.7'),
+    desc: t('how.7desc'),
+    src: 'https://letsexchange.io/_nuxt/img/6.9d6506a.svg',
+  }, {
+    id: 8,
+    title: t('how.8'),
+    desc: t('how.8desc'),
+    src: 'https://letsexchange.io/_nuxt/img/7.e7529b5.svg',
+  }, {
+    id: 9,
+    title: t('how.9'),
+    desc: t('how.9desc'),
+    src: null,
+  }];
+
   const [step, setStep] = useState(arr[0]);
   const [stepImg, setStepImg] = useState(arr[0].src);
 
@@ -67,9 +70,9 @@ const HowItWorks: React.FC = () => {
         <Path>
           <PathHref to="/">LetsExchange</PathHref>
           <>/</>
-          <div>Как это работает</div>
+          <div>{t('how.title')}</div>
         </Path>
-        <PrimaryText>Как это работает</PrimaryText>
+        <PrimaryText>{t('how.title')}</PrimaryText>
         <ContentWrapper>
           <ListWrapper>
             {arr.map((item, i) => (

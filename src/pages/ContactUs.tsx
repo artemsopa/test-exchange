@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import DefaultLayout from '@/layouts/DefaultLayout';
 
 const ContactUs: React.FC = () => {
+  const { t } = useTranslation();
+
   const {
     register, setValue, handleSubmit, formState: { errors },
   } = useForm<{ email: string; name: string; desc: string }>({
@@ -17,7 +20,7 @@ const ContactUs: React.FC = () => {
     setValue('email', '');
     setValue('name', '');
     setValue('desc', '');
-    toast.success('Мы свяжемся с Вами в ближайшее время');
+    toast.success(t('contacts.notify'));
   };
 
   return (
@@ -26,28 +29,28 @@ const ContactUs: React.FC = () => {
         <Path>
           <PathHref to="/">LetsExchange</PathHref>
           <>/</>
-          <div>Контакты</div>
+          <div>{t('contacts.title')}</div>
         </Path>
-        <PrimaryText>Контакты</PrimaryText>
+        <PrimaryText>{t('contacts.title')}</PrimaryText>
         <ContentWrapper>
           <SecondaryText>
-            Рабочее время:
-            <Span>24/7</Span>
+            {t('contacts.time')}
+            <Span>{t('contacts.number')}</Span>
           </SecondaryText>
-          <Desc>Есть вопрос, предложение или возникла проблема? Заполните форму ниже</Desc>
+          <Desc>{t('contacts.desc')}</Desc>
           <FormWrapper onSubmit={handleSubmit(submit)}>
             <InputsLine>
               <InputWraper>
                 <Input
-                  placeholder="Имя"
+                  placeholder={t('contacts.nameplace')}
                   {...register('name', {
                     maxLength: {
                       value: 50,
-                      message: 'Максимальная длина 50',
+                      message: t('contacts.namemax'),
                     },
                     required: {
                       value: true,
-                      message: 'Требуется указать имя',
+                      message: t('contacts.namerequired'),
                     },
                   })}
                 />
@@ -55,21 +58,21 @@ const ContactUs: React.FC = () => {
               </InputWraper>
               <InputWraper>
                 <Input
-                  placeholder="Эл. почта"
+                  placeholder={t('contacts.emailplace')}
                   {...register(
                     'email',
                     {
                       maxLength: {
                         value: 255,
-                        message: 'Максимальная длина 255',
+                        message: t('contacts.emailmax'),
                       },
                       required: {
                         value: true,
-                        message: 'Требуется указать эл. почту',
+                        message: t('contacts.emailrequired'),
                       },
                       pattern: {
                         value: /\S+@\S+\.\S+/,
-                        message: 'Неверный формат эл. почты',
+                        message: t('contacts.emailpattern'),
                       },
                     },
                   )}
@@ -79,20 +82,20 @@ const ContactUs: React.FC = () => {
             </InputsLine>
             <InputWraper>
               <Textarea
-                placeholder="Пожалуйста, укажите детали вашего запроса."
+                placeholder={t('contacts.messageplace')}
                 {...register(
                   'desc',
                   {
                     required: {
                       value: true,
-                      message: 'Требуется указать детали запроса',
+                      message: t('contacts.messagerequired'),
                     },
                   },
                 )}
               />
               {errors.desc && <ErrorText>{errors.desc.message}</ErrorText>}
             </InputWraper>
-            <Button type="submit">Отправить</Button>
+            <Button type="submit">{t('contacts.send')}</Button>
           </FormWrapper>
         </ContentWrapper>
       </Main>

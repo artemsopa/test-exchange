@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { useTranslation } from 'react-i18next';
 import Logo from '@/assets/logo.svg';
 import TrustPilot from '@/assets/trust_pilot.svg';
 
@@ -53,6 +54,8 @@ const Footer: React.FC = () => {
     CONTACTS = '/contacts',
   }
 
+  const { t } = useTranslation();
+
   const location = useLocation();
 
   const {
@@ -63,7 +66,7 @@ const Footer: React.FC = () => {
 
   const submit = () => {
     setValue('email', '');
-    toast.success('Вы успешно подписались на новости!');
+    toast.success(t('footer.notify'));
   };
 
   return (
@@ -74,45 +77,47 @@ const Footer: React.FC = () => {
         </LogoImgWrapper>
         <Content>
           <Navigation>
-            <BlockTitle>Навигация</BlockTitle>
-            <NavigationItem isActive={location.pathname === Path.HOME} to="/">Главная</NavigationItem>
-            <NavigationItem isActive={location.pathname === Path.ABOUT_US} to="/about-us">О нас</NavigationItem>
-            <NavigationItem isActive={location.pathname === Path.HOW_IT_WORKS} to="/how-it-works">Как это работает</NavigationItem>
-            <NavigationItem isActive={location.pathname === Path.CONTACTS} to="/contacts">Контакты</NavigationItem>
+            <BlockTitle>{t('footer.navigation')}</BlockTitle>
+            <NavigationItem isActive={location.pathname === Path.HOME} to="/">{t('footer.home')}</NavigationItem>
+            <NavigationItem isActive={location.pathname === Path.ABOUT_US} to="/about-us">{t('footer.about')}</NavigationItem>
+            <NavigationItem isActive={location.pathname === Path.HOW_IT_WORKS} to="/how-it-works">{t('footer.how')}</NavigationItem>
+            <NavigationItem isActive={location.pathname === Path.CONTACTS} to="/contacts">{t('footer.contacts')}</NavigationItem>
           </Navigation>
           <SubscribeForm onSubmit={handleSubmit(submit)}>
-            <BlockTitle>Подписаться на новости</BlockTitle>
+            <BlockTitle>{t('footer.newsTitle')}</BlockTitle>
             <Input
-              placeholder="Введите свою эл. почту"
+              placeholder={t('footer.enterEmail')}
               {...register(
                 'email',
                 {
                   maxLength: {
                     value: 255,
-                    message: 'Максимальная длина 255',
+                    message: t('footer.email.max'),
                   },
                   required: {
                     value: true,
-                    message: 'Требуется указать эл. почту',
+                    message: t('footer.email.required'),
                   },
                   pattern: {
                     value: /\S+@\S+\.\S+/,
-                    message: 'Неверный формат эл. почты',
+                    message: t('footer.email.pattern'),
                   },
                 },
               )}
             />
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
-            <Button type="submit">Подписаться</Button>
+            <Button type="submit">{t('footer.subscribe')}</Button>
             <SecondaryText>
-              Ваш адрес электронной почты НИКОГДА не будет передан, сдан в аренду или продан, и вы можете отказаться от подписки в любое время.
+              {t('footer.desc')}
             </SecondaryText>
-            <TrustImg src={TrustPilot} />
+            <TrustHref href="https://www.trustpilot.com/evaluate/letsexchange.io">
+              <TrustImg src={TrustPilot} />
+            </TrustHref>
           </SubscribeForm>
         </Content>
         <PrivacyLinksWrapper>
           <Text>
-            Copyright © 2023 LetsExchange. Все права защищены.
+            {t('footer.copyright')}
           </Text>
         </PrivacyLinksWrapper>
         <LogosTicker>
@@ -242,6 +247,14 @@ const SecondaryText = styled.div`
   margin: 12px 0 0;
 `;
 
+const TrustHref = styled.a`
+  margin: 0px auto;
+  transition: transform .2s;
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
 const TrustImg = styled.img`
   margin: 0px auto;
   height: 26px;
@@ -249,6 +262,7 @@ const TrustImg = styled.img`
 `;
 
 const PrivacyLinksWrapper = styled.div`
+  margin-top: 30px;
   display: flex;
   flex-direction: row;
   gap: 20px;

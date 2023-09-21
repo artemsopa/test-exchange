@@ -1,0 +1,81 @@
+{
+    "home": {
+        "title": "Fast exchange, no registration, fixed and floating rates.",
+        "titleSpan": "Let's try!",
+        "steps": {
+            "first": {
+                "span": "3530+",
+                "text": "supported coins"
+            },
+            "second": {
+                "span": "Exchange",
+                "text": "without limits"
+            },
+            "third": {
+                "span": "Non-custodial",
+                "text": "security"
+            }
+        }
+    },
+    "header": {
+        "about": "About Us",
+        "how": "How It Works",
+        "contacts": "Contacts"
+    },
+    "footer": {
+        "notify": "You have successfully subscribed to the news!",
+        "navigation": "Navigation",
+        "home": "Home",
+        "about": "About Us",
+        "how": "How It Works",
+        "contacts": "Contacts",
+        "copyright": "Copyright © 2023 LetsExchange. All rights reserved.",
+        "newsTitle": "Subscribe for updates",
+        "enterEmail": "Enter your email address",
+        "subscribe": "Subscribe",
+        "desc": "Your email address will NEVER be shared, rented or sold and you can unsubscribe at any time.",
+        "email": {
+            "max": "Max length is 255",
+            "pattern": "Invalid email format",
+            "required": "Email is required"
+        }
+    },
+    "how": {
+        "title": "How it Works",
+        "1": "Pick a currency pair and enter the amount to send",
+        "1desc": "Choose from hundreds of coins and exchange any amount without upper limits",
+        "2": "Indicate your receiving address for the selected coin",
+        "2desc": "Add a destination tag (memo, message, etc) if required",
+        "3": "Enter and apply a promo code if you have one",
+        "3desc": "Your bonus will be added to the total amount and displayed in the “You get” field",
+        "4": "Select a fixed or floating rate and click “Let’s Exchange”",
+        "4desc": "A fixed rate excludes slippage for 30 minutes, a floating rate may fluctuate.",
+        "5": "Check and confirm the exchange details",
+        "5desc": "If all the details are correct, click “Accept”",
+        "6": "Send the exact exchange amount to the deposit address",
+        "6desc": "You can scan the QR code or copy the address. Make sure to add a destination tag if required.",
+        "7": "Wait for the exchange to go through",
+        "7desc": "Click “Notify me” to get an email notification when the exchange is completed",
+        "8": "Yay! Your exchange is done",
+        "8desc": "Request a receipt if needed; you can also sign up to track your exchange history",
+        "9": "Let’s exchange now",
+        "9desc": "Everything’s ready for your easy and secure crypto exchange"
+    },
+    "contacts": {
+        "title": "Contacts",
+        "time": "Working hours:",
+        "number": "24/7 days",
+        "desc": "Got a question, suggestion or faced an issue? Just fill in the form below.",
+        "nameplace": "Name",
+        "namemax": "Maxlength is 50",
+        "namerequired": "Name is required",
+        "emailplace": "Email",
+        "emailmax": "Max length is 255",
+        "emailrequired": "Email is required",
+        "emailpattern": "Invalid email format",
+        "messageplace": "Please provide details of your request.",
+        "messagerequired": "Request details required",
+        "send": "Submit",
+        "notify": "We will contact you shortly!"
+    }
+}
