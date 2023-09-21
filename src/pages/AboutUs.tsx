@@ -10,48 +10,48 @@ const AboutUs: React.FC = () => {
   const arr = [{
     lines: [{
       src: 'https://letsexchange.io/_nuxt/img/clockIcon.fb50c60.svg',
-      title: 'Ловите момент',
-      desc: 'Регистрации не требуется, поэтому вы можете начать обмен в кратчайшие сроки, как только курс обмена будет удобным для Вас.',
+      title: t('aboutus.1'),
+      desc: t('aboutus.1desc'),
     }, {
       src: 'https://letsexchange.io/_nuxt/img/rocketIcon.03cf40b.svg',
-      title: 'Начни без усилий',
-      desc: 'Интуитивно понятный интерфейс с универсальным виджетом обмена разработан для быстрого и легкого обмена криптовалюты. Просто выберите нужную пару, введите сумму и адрес своего кошелька, затем нажмите “Обменять”.',
+      title: t('aboutus.2'),
+      desc: t('aboutus.2desc'),
     }],
   }, {
     lines: [{
       src: 'https://letsexchange.io/_nuxt/img/speedIcon.2f116f3.svg',
-      title: 'Сделайте это мгновенно',
-      desc: 'Благодаря оптимизированному, полностью автоматизированному процессу обмена транзакции на LetsExchange выполняются мгновенно. Время обработки обмена зависит исключительно от скорости сети выбранных монет.',
+      title: t('aboutus.3'),
+      desc: t('aboutus.3desc'),
     }, {
       src: 'https://letsexchange.io/_nuxt/img/coinsIcon.97d2bab.svg',
-      title: 'Получите максимальную выгоду от каждой сделки',
-      desc: 'Наша технология SmartRate подбирает наиболее выгодный курс среди нескольких основных обменных платформ для каждого обмена.',
+      title: t('aboutus.4'),
+      desc: t('aboutus.4desc'),
     }],
   }, {
     lines: [{
       src: 'https://letsexchange.io/_nuxt/img/limitIcon.6b9d9db.svg',
-      title: 'Торговля без ограничений',
-      desc: 'Выбирайте из 3530+ монет и 12404500+ криптовалютных пар без каких-либо ограничений на транзакции со стороні LetsExchange.',
+      title: t('aboutus.5'),
+      desc: t('aboutus.5desc'),
     }, {
       src: 'https://letsexchange.io/_nuxt/img/lockIcon.a1fd6c2.svg',
-      title: 'Закрепить курс или разрешите ему колебаться',
-      desc: 'Выберите параметр “Фиксированный курс”, чтобы получить точную сумму, которую вы видите перед началом транзакции, или придерживайтесь классического метода обмена с плавающим курсом',
+      title: t('aboutus.6'),
+      desc: t('aboutus.6desc'),
     }],
   }, {
     lines: [{
       src: 'https://letsexchange.io/_nuxt/img/shieldIcon.30f8fa4.svg',
-      title: 'Оставайтесь в безопасности',
-      desc: 'Мы не храним ваши средства и личные данные. Все представленные монеты проходят валидацию и проверку. Безопасность платформы повышена за счет шифрования, сертификата SSL и защиты от DDoS-атак.',
+      title: t('aboutus.7'),
+      desc: t('aboutus.7desc'),
     }, {
       src: 'https://letsexchange.io/_nuxt/img/loopIcon.aa01669.svg',
-      title: 'Отслеживайте и проверяйте',
-      desc: 'Процесс обмена является чистым и прозрачным. Вы можете запросить квитанцию ​​с полной информацией по транзакции.',
+      title: t('aboutus.8'),
+      desc: t('aboutus.8desc'),
     }],
   }, {
     lines: [{
       src: 'https://letsexchange.io/_nuxt/img/phoneIcon.beb4381.svg',
-      title: 'Обращайтесь в любое время',
-      desc: 'В случае возникновения вопросов наша служба поддержки готова помочь 24/7.',
+      title: t('aboutus.9'),
+      desc: t('aboutus.9desc'),
     }],
   }];
 
@@ -61,11 +61,11 @@ const AboutUs: React.FC = () => {
         <Path>
           <PathHref to="/">LetsExchange</PathHref>
           <>/</>
-          <div>О нас</div>
+          <div>{t('aboutus.mainTitle')}</div>
         </Path>
-        <PrimaryText>О нас</PrimaryText>
+        <PrimaryText>{t('aboutus.mainTitle')}</PrimaryText>
         <Desc>
-          LetsExchange – это универсальный сервис для обмена криптовалюты без регистрации, ограничений и сложностей. LetsExchange создан командой профессионалов с более чем 10-летним опытом работы в сфере блокчейн и финансовых технологий. LetsExchange экономит ваше время на каждом этапе обмена криптовалюты и увеличивает ваш доход.
+          {t('aboutus.mainDesc')}
         </Desc>
         <ContentWrapper>
           {arr.map((line, li) => (

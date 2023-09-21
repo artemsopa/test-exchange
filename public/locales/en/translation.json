@@ -77,5 +77,27 @@
         "messagerequired": "Request details required",
         "send": "Submit",
         "notify": "We will contact you shortly!"
+    },
+    "aboutus": {
+        "mainTitle": "About Us",
+        "mainDesc": "LetsExchange is a one-stop multicurrency exchange service free of registration, limits, and complications. Built by a team of crypto visionaries with 10+ years of experience in the blockchain space and fintech, LetsExchange saves your time at each step of a crypto swap and amplifies your trading revenue.",
+        "1": "Seize the moment",
+        "1desc": "No registration is required, so that you can start trading in no time, as soon as the rate is right for you.",
+        "2": "Get started with no effort",
+        "2desc": "An intuitive interface with an all-in-one exchange widget is designed for swift and effortless crypto swaps. Just pick a currency pair, enter the amount and your wallet address, then click “Exchange”.",
+        "3": "Get it done in a flash",
+        "3desc": "With a streamlined, fully automated exchange process, transactions only take an instant on LetsExchange. The exchange processing time solely depends on the network speed of the selected coins.",
+        "4": "Get the most out of each trade",
+        "4desc": "Our SmartRate technology cherry-picks the most profitable rate across multiple major exchange platforms for every swap.",
+        "5": "Trade without limits",
+        "5desc": "Choose from 3530+ coins and 12418600+ currency pairs without any transaction restrictions applied by LetsExchange.",
+        "6": "Fix the rates or let them float",
+        "6desc": "Select the Fixed Rates option to get the exact amount you see before starting a trade or stick to the classic exchange flow with floating rates.",
+        "7": "Keep it safe",
+        "7desc": "We don’t store your funds and personal data. All featured coins are validated and double-checked. The platform’s security is enhanced by encryption, an SSL certificate, and DDoS protection.",
+        "8": "Track and check",
+        "8desc": "The exchange process is clear and transparent, and you can request a receipt with full transaction details.",
+        "9": "Feel free to reach out",
+        "9desc": "In case of any questions, our support team is here to help 24/7."
     }
 }
