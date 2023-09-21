@@ -1,22 +1,31 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Logo from '@/assets/logo.svg';
 
-const Header: React.FC = () => (
-  <Main>
-    <LogoImgWrapper to="/">
-      <LogoImg src={Logo} />
-    </LogoImgWrapper>
-    <HrefsWrapper>
-      <Href to="/">О нас</Href>
-      <Href to="/">Как это работает</Href>
-      <Href to="/">Афиллиатная реклама</Href>
-      <Href to="/">Ru</Href>
-      <Href to="/">Помощь</Href>
-    </HrefsWrapper>
-  </Main>
-);
+const Header: React.FC = () => {
+  enum Path {
+    ABOUT_US = '/about-us',
+    HOW_IT_WORKS = '/how-it-works',
+    CONTACTS = '/contacts',
+  }
+
+  const location = useLocation();
+
+  return (
+    <Main>
+      <LogoImgWrapper to="/">
+        <LogoImg src={Logo} />
+      </LogoImgWrapper>
+      <HrefsWrapper>
+        <Href isActive={location.pathname === Path.ABOUT_US} to="/about-us">О нас</Href>
+        <Href isActive={location.pathname === Path.HOW_IT_WORKS} to="/how-it-works">Как это работает</Href>
+        <Href isActive={location.pathname === Path.CONTACTS} to="/contacts">Контакты</Href>
+        <Href to="/">Ru</Href>
+      </HrefsWrapper>
+    </Main>
+  );
+};
 
 export default Header;
 
@@ -45,13 +54,15 @@ const LogoImg = styled.img`
 const HrefsWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 5px;
 `;
 
-const Href = styled(Link)`
-  color: #fff;
+const Href = styled(Link)<{ isActive?: boolean }>`
+  color: ${({ isActive }) => (isActive ? '#bef102' : '#fff')};
   font-size: 14px;
   line-height: 17px;
   font-weight: 500;
+  letter-spacing: 1px;
   margin: 0 12px;
   display: flex;
   justify-content: center;

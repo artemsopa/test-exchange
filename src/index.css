@@ -88,7 +88,7 @@ a {
     text-decoration: none;
 }
 
-input {
+input, textarea {
     appearance: none;
     -webkit-appearance: none;
     font-family: 'Inter', sans-serif;

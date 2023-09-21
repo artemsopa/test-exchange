@@ -4,7 +4,7 @@ import {
 import styled from 'styled-components';
 import { useHover } from 'usehooks-ts';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Coin } from '@/types/Coin';
 import ArrowDownIcon from '@/icons/ArrowDownIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
@@ -269,7 +269,6 @@ const ExchangeWindow: React.FC = () => {
 
   return (
     <MainWrapper>
-      <ToastContainer autoClose={1000} />
       <Main>
         {currStep === Step.FIRST && (
         <>
@@ -805,6 +804,7 @@ const Body = styled.div`
     }
 
     &:after {
+      left: -10px;
       animation: moveRight 2s ease 2s infinite normal forwards;
       background: linear-gradient(90deg,rgba(251,251,255,0) 0,#fff);
       content: "";

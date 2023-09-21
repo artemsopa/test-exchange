@@ -1,8 +1,8 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/alt-text */
+import { Form } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Link } from 'react-router-dom';
 
 import Logo from '@/assets/logo.svg';
 import TrustPilot from '@/assets/trust_pilot.svg';
@@ -45,69 +45,89 @@ const logos = [{
   src: 'https://letsexchange.io/images/monitoring/xrates.svg',
 }];
 
-const Footer: React.FC = () => (
-  <Main>
-    <ContentWrapper>
-      <LogoImgWrapper to="/">
-        <LogoImg src={Logo} />
-      </LogoImgWrapper>
-      <Content>
-        <Navigation>
-          <BlockTitle>Навигация</BlockTitle>
-          <NavigationItem to="/">Главная</NavigationItem>
-          <NavigationItem to="/">О нас</NavigationItem>
-          <NavigationItem to="/">Медиа-кит</NavigationItem>
-          <NavigationItem to="/">Как это работает</NavigationItem>
-          <NavigationItem to="/">Афиллиатная реклама</NavigationItem>
-          <NavigationItem to="/">Страница статуса</NavigationItem>
-          <NavigationItem to="/">Контакты</NavigationItem>
-          <NavigationItem to="/">API для разработчиков</NavigationItem>
-          <NavigationItem to="/">Sitemap</NavigationItem>
-        </Navigation>
-        <SubscribeForm>
-          <BlockTitle>Подписаться на новости</BlockTitle>
-          <Input placeholder="Введите свой email" />
-          <Button>Подписаться</Button>
-          <SecondaryText>
-            Ваш адрес электронной почты НИКОГДА не будет передан, сдан в аренду или продан, и вы можете отказаться от подписки в любое время.
-          </SecondaryText>
-          <TrustImg src={TrustPilot} />
-        </SubscribeForm>
-      </Content>
-      <PrivacyLinksWrapper>
-        <Text>
-          Copyright © 2023 LetsExchange. Все права защищены.
-        </Text>
-        <PrivacyLinks>
-          <PrivacyLinkItem href="/">
-            Вознаграждение за обнаружение ошибок
-          </PrivacyLinkItem>
-          <PrivacyLinkItem href="/">
-            Политика конфиденциальности
-          </PrivacyLinkItem>
-          <PrivacyLinkItem href="/">
-            Условия эксплуатации
-          </PrivacyLinkItem>
-          <PrivacyLinkItem href="/">
-            Cookie Policy
-          </PrivacyLinkItem>
-          <PrivacyLinkItem href="/">
-            KYC/AML
-          </PrivacyLinkItem>
-        </PrivacyLinks>
-      </PrivacyLinksWrapper>
-      <LogosTicker>
-        <LogosTickerContainer>
-          {[...logos, ...logos, ...logos, ...logos, ...logos].map((item, i) => (
-            <LogoTickerItem href={item.href} key={i}>
-              <LogoTickerImg src={item.src} />
-            </LogoTickerItem>
-          ))}
-        </LogosTickerContainer>
-      </LogosTicker>
-    </ContentWrapper>
-  </Main>
-);
+const Footer: React.FC = () => {
+  enum Path {
+    HOME = '/',
+    ABOUT_US = '/about-us',
+    HOW_IT_WORKS = '/how-it-works',
+    CONTACTS = '/contacts',
+  }
+
+  const location = useLocation();
+
+  const {
+    register, setValue, handleSubmit, formState: { errors },
+  } = useForm<{ email: string; }>({
+    mode: 'onChange',
+  });
+
+  const submit = () => {
+    setValue('email', '');
+    toast.success('Вы успешно подписались на новости!');
+  };
+
+  return (
+    <Main>
+      <ContentWrapper>
+        <LogoImgWrapper to="/">
+          <LogoImg src={Logo} />
+        </LogoImgWrapper>
+        <Content>
+          <Navigation>
+            <BlockTitle>Навигация</BlockTitle>
+            <NavigationItem isActive={location.pathname === Path.HOME} to="/">Главная</NavigationItem>
+            <NavigationItem isActive={location.pathname === Path.ABOUT_US} to="/about-us">О нас</NavigationItem>
+            <NavigationItem isActive={location.pathname === Path.HOW_IT_WORKS} to="/how-it-works">Как это работает</NavigationItem>
+            <NavigationItem isActive={location.pathname === Path.CONTACTS} to="/contacts">Контакты</NavigationItem>
+          </Navigation>
+          <SubscribeForm onSubmit={handleSubmit(submit)}>
+            <BlockTitle>Подписаться на новости</BlockTitle>
+            <Input
+              placeholder="Введите свою эл. почту"
+              {...register(
+                'email',
+                {
+                  maxLength: {
+                    value: 255,
+                    message: 'Максимальная длина 255',
+                  },
+                  required: {
+                    value: true,
+                    message: 'Требуется указать эл. почту',
+                  },
+                  pattern: {
+                    value: /\S+@\S+\.\S+/,
+                    message: 'Неверный формат эл. почты',
+                  },
+                },
+              )}
+            />
+            {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+            <Button type="submit">Подписаться</Button>
+            <SecondaryText>
+              Ваш адрес электронной почты НИКОГДА не будет передан, сдан в аренду или продан, и вы можете отказаться от подписки в любое время.
+            </SecondaryText>
+            <TrustImg src={TrustPilot} />
+          </SubscribeForm>
+        </Content>
+        <PrivacyLinksWrapper>
+          <Text>
+            Copyright © 2023 LetsExchange. Все права защищены.
+          </Text>
+        </PrivacyLinksWrapper>
+        <LogosTicker>
+          <LogosTickerContainer>
+            {[...logos, ...logos, ...logos, ...logos, ...logos].map((item, i) => (
+              <LogoTickerItem href={item.href} key={i}>
+                <LogoTickerImg src={item.src} />
+              </LogoTickerItem>
+            ))}
+          </LogosTickerContainer>
+        </LogosTicker>
+      </ContentWrapper>
+    </Main>
+  );
+};
 
 export default Footer;
 
@@ -159,11 +179,11 @@ const BlockTitle = styled.div`
   font-weight: 700;
 `;
 
-const NavigationItem = styled(Link)`
+const NavigationItem = styled(Link)<{ isActive?: boolean }>`
+  color: ${({ isActive }) => (isActive ? '#bef102' : '#fff')};
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
-  color: #fff;
   transition: 0.3s cubic-bezier(.25,.8,.25,1);
   transition-property: color, background-color, opacity;
   &:hover {
@@ -171,7 +191,7 @@ const NavigationItem = styled(Link)`
   }
 `;
 
-const SubscribeForm = styled.div`
+const SubscribeForm = styled(Form)`
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -190,7 +210,18 @@ const Input = styled.input`
   padding: 5px 20px;
 `;
 
-const Button = styled.div`
+const ErrorText = styled.div`
+  border-radius: 15px;
+  color: #f2545b;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-top: -10px;
+  padding: 0px 10px;
+`;
+
+const Button = styled.button`
+  border: none;
   background-color: #bef102;
   color: black;
   line-height: 20px;
@@ -232,28 +263,6 @@ const PrivacyLinksWrapper = styled.div`
 `;
 
 const Text = styled.div``;
-
-const PrivacyLinks = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 17px;
-`;
-
-const PrivacyLinkItem = styled.a`
-  color: #fff;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 17px;
-  transition: 0.3s cubic-bezier(.25,.8,.25,1);
-  transition-property: color, background-color, opacity;
-  &:hover {
-    color: #bef102;
-  }
-`;
 
 const LogosTicker = styled.div`
   display: flex;
