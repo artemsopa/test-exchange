@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { useHover } from 'usehooks-ts';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Coin } from '@/types/Coin';
 import ArrowDownIcon from '@/icons/ArrowDownIcon';
 import ArrowRightIcon from '@/icons/ArrowRightIcon';
@@ -33,6 +35,7 @@ const coins: Coin[] = [{
   dex: false,
   min: '0.004',
   max: '14',
+  regex: /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/g,
 }, {
   main: 'ETH',
   title: 'ETH',
@@ -44,6 +47,7 @@ const coins: Coin[] = [{
   dex: false,
   min: '0.07',
   max: '240.28962909833',
+  regex: /^0x[a-fA-F0-9]{40}$/g,
 }, {
   main: 'USDT-TRC20',
   title: 'TRC20',
@@ -55,6 +59,7 @@ const coins: Coin[] = [{
   dex: false,
   min: '110',
   max: '404914.91',
+  regex: /^T[0-9a-fA-F]{33}$/,
 }, {
   main: 'USDC-ALGO',
   title: 'ALGO',
@@ -66,6 +71,7 @@ const coins: Coin[] = [{
   dex: false,
   min: '110',
   max: '405012.86',
+  regex: /^A[2-7A-Z]{58}$/,
 }, {
   main: 'XMR',
   title: 'XMR',
@@ -77,6 +83,7 @@ const coins: Coin[] = [{
   dex: false,
   min: '0.8',
   max: '2675.68',
+  regex: /^4[0-9A-HJ-NP-Za-km-z]{94}$/,
 }, {
   main: 'MATIC',
   title: 'MATIC',
@@ -88,6 +95,7 @@ const coins: Coin[] = [{
   dex: false,
   min: '200',
   max: '653507.63689024',
+  regex: /^(0x)?[0-9a-fA-F]{40}$/,
 }];
 
 const ExchangeWindow: React.FC = () => {
@@ -109,6 +117,24 @@ const ExchangeWindow: React.FC = () => {
     CANCELED_TRANSACTION,
     SUPPORT,
   }
+
+  const { t } = useTranslation();
+
+  const {
+    register, setValue, handleSubmit, watch, formState: { errors },
+  } = useForm<{ wallet: string; }>({
+    mode: 'onChange',
+  });
+
+  const wallet = watch('wallet');
+
+  useEffect(() => {
+    if (!wallet) {
+      setWalletValue('');
+    } else {
+      setWalletValue(wallet);
+    }
+  }, [wallet]);
 
   const [currStep, setCurrStep] = useState<Step>(Step.FIRST);
 
@@ -219,7 +245,7 @@ const ExchangeWindow: React.FC = () => {
     }
   };
 
-  useEffect(() => {}, [giveAmount]);
+  useEffect(() => { }, [giveAmount]);
 
   const handleSwitchCoins = () => {
     const tempGive = selectedGetCoin;
@@ -271,389 +297,411 @@ const ExchangeWindow: React.FC = () => {
     <MainWrapper>
       <Main>
         {currStep === Step.FIRST && (
-        <>
-          <Headline>
-            <PrelogoIcon />
-            <StepsWrapper>
-              <StepsTitle>Начать обмен</StepsTitle>
-              <StepList>
-                <StepItem isActive />
-                <StepItem />
-                <StepItem />
-                <StepItem />
-              </StepList>
-            </StepsWrapper>
-            <RefreshIconWrapper
-              isActive={isRefreshActive}
-              onClick={() => { setIsRefreshActive(false); }}
-            >
-              <RefreshIcon />
-            </RefreshIconWrapper>
-          </Headline>
-          <CourseWrapper>
-            <CourseItem
-              isFill
-              isActive={selectedCourse === Course.FLOAT}
-              onClick={() => setSelectedCourse(Course.FLOAT)}
-            >
-              <FloatIcon />
-              Плавающий курс
-            </CourseItem>
-            <CourseItem
-              isFill={false}
-              isActive={selectedCourse === Course.FIXED}
-              onClick={() => setSelectedCourse(Course.FIXED)}
-            >
-              <FixedIcon />
-              Фиксированный курс
-            </CourseItem>
-          </CourseWrapper>
-          <Body>
-            <InputsWrapper>
-              <ErrorInputWrapper isError={!!exchangeErorr}>
-                {exchangeErorr && <ErrorWrapper onClick={() => setGiveAmount(exchangeErorr.min ? exchangeErorr.min : exchangeErorr.max ? exchangeErorr.max : selectedGiveCoin.min)}>{exchangeErorr.message}</ErrorWrapper>}
-                <InputWrapper isHover={isGiveHover} isActive={isGiveInputActive} isError={!!exchangeErorr}>
+          <>
+            <Headline>
+              <PrelogoIcon />
+              <StepsWrapper>
+                <StepsTitle>{t('exchange.step1.title')}</StepsTitle>
+                <StepList>
+                  <StepItem isActive />
+                  <StepItem />
+                  <StepItem />
+                  <StepItem />
+                </StepList>
+              </StepsWrapper>
+              <RefreshIconWrapper
+                isActive={isRefreshActive}
+                onClick={() => { setIsRefreshActive(false); }}
+              >
+                <RefreshIcon />
+              </RefreshIconWrapper>
+            </Headline>
+            <CourseWrapper>
+              <CourseItem
+                isFill
+                isActive={selectedCourse === Course.FLOAT}
+                onClick={() => setSelectedCourse(Course.FLOAT)}
+              >
+                <FloatIcon />
+                {t('exchange.step1.float')}
+              </CourseItem>
+              <CourseItem
+                isFill={false}
+                isActive={selectedCourse === Course.FIXED}
+                onClick={() => setSelectedCourse(Course.FIXED)}
+              >
+                <FixedIcon />
+                {t('exchange.step1.fixed')}
+              </CourseItem>
+            </CourseWrapper>
+            <Body>
+              <InputsWrapper>
+                <ErrorInputWrapper isError={!!exchangeErorr}>
+                  {exchangeErorr && <ErrorWrapper onClick={() => setGiveAmount(exchangeErorr.min ? exchangeErorr.min : exchangeErorr.max ? exchangeErorr.max : selectedGiveCoin.min)}>{exchangeErorr.message}</ErrorWrapper>}
+                  <InputWrapper isHover={isGiveHover} isActive={isGiveInputActive} isError={!!exchangeErorr}>
+                    <InputPrimary>
+                      <InputLabel>{t('exchange.step1.give')}</InputLabel>
+                      <Input
+                        type="number"
+                        value={giveAmount || selectedGiveCoin.min}
+                        onFocus={() => setIsGiveInputActive(true)}
+                        onBlur={() => setIsGiveInputActive(false)}
+                        onChange={handleAmountChange}
+                      />
+                      <EqualLabel>
+                        ≈$
+                        {depositAmountUsdt}
+                      </EqualLabel>
+                    </InputPrimary>
+                    <SelectedCoin ref={giveRef} onClick={() => setCurrStep(Step.GIVE_COIN)}>
+                      <CoinImg src={selectedGiveCoin.img} />
+                      <CoinTextWrapper>
+                        <CoinShortTitle>{selectedGiveCoin.shortTitle}</CoinShortTitle>
+                        {selectedGiveCoin.shortTitle !== selectedGiveCoin.title
+                          && <CoinTitle>{selectedGiveCoin.title}</CoinTitle>}
+                      </CoinTextWrapper>
+                      <SvgWrapper>
+                        <ArrowDownIcon />
+                      </SvgWrapper>
+                    </SelectedCoin>
+                  </InputWrapper>
+                </ErrorInputWrapper>
+                <InputWrapper isHover={isGetHover}>
                   <InputPrimary>
-                    <InputLabel>Вы отправляете</InputLabel>
-                    <Input
-                      type="number"
-                      value={giveAmount || selectedGiveCoin.min}
-                      onFocus={() => setIsGiveInputActive(true)}
-                      onBlur={() => setIsGiveInputActive(false)}
-                      onChange={handleAmountChange}
-                    />
-                    <EqualLabel>
-                      ≈$
-                      {depositAmountUsdt}
-                    </EqualLabel>
+                    <InputLabel>{t('exchange.step1.get')}</InputLabel>
+                    {getAmount
+                      ? <Input type="text" value={getAmount} disabled style={{ cursor: 'not-allowed' }} />
+                      : <Loader />}
                   </InputPrimary>
-                  <SelectedCoin ref={giveRef} onClick={() => setCurrStep(Step.GIVE_COIN)}>
-                    <CoinImg src={selectedGiveCoin.img} />
+                  <SelectedCoin ref={getRef} onClick={() => setCurrStep(Step.GET_COIN)}>
+                    <CoinImg src={selectedGetCoin.img} />
                     <CoinTextWrapper>
-                      <CoinShortTitle>{selectedGiveCoin.shortTitle}</CoinShortTitle>
-                      {selectedGiveCoin.shortTitle !== selectedGiveCoin.title
-                                                && <CoinTitle>{selectedGiveCoin.title}</CoinTitle>}
+                      <CoinShortTitle>{selectedGetCoin.shortTitle}</CoinShortTitle>
+                      {selectedGetCoin.shortTitle !== selectedGetCoin.title
+                        && <CoinTitle>{selectedGetCoin.title}</CoinTitle>}
                     </CoinTextWrapper>
                     <SvgWrapper>
                       <ArrowDownIcon />
                     </SvgWrapper>
                   </SelectedCoin>
                 </InputWrapper>
-              </ErrorInputWrapper>
-              <InputWrapper isHover={isGetHover}>
-                <InputPrimary>
-                  <InputLabel>Вы получаете</InputLabel>
-                  {getAmount
-                    ? <Input type="text" value={getAmount} disabled style={{ cursor: 'not-allowed' }} />
-                    : <Loader />}
-                </InputPrimary>
-                <SelectedCoin ref={getRef} onClick={() => setCurrStep(Step.GET_COIN)}>
-                  <CoinImg src={selectedGetCoin.img} />
-                  <CoinTextWrapper>
-                    <CoinShortTitle>{selectedGetCoin.shortTitle}</CoinShortTitle>
-                    {selectedGetCoin.shortTitle !== selectedGetCoin.title
-                                                && <CoinTitle>{selectedGetCoin.title}</CoinTitle>}
-                  </CoinTextWrapper>
-                  <SvgWrapper>
-                    <ArrowDownIcon />
-                  </SvgWrapper>
-                </SelectedCoin>
-              </InputWrapper>
-              <Switch onClick={handleSwitchCoins}>
-                <SwitchIcon />
-              </Switch>
-            </InputsWrapper>
-            <SimpleInput>
-              <SimpleTextPrimary>Добавить промокод</SimpleTextPrimary>
-              <SimpleTextSecondary>
-                Не обязательно
-                <ArrowRightIcon />
-              </SimpleTextSecondary>
-            </SimpleInput>
-            <Button className="btn-4" isDisabled={!!exchangeErorr} onClick={() => (!exchangeErorr ? setCurrStep(Step.SECOND) : undefined)}><span>Обмен</span></Button>
-          </Body>
-        </>
+                <Switch onClick={handleSwitchCoins}>
+                  <SwitchIcon />
+                </Switch>
+              </InputsWrapper>
+              <SimpleInput>
+                <SimpleTextPrimary>{t('exchange.step1.promocode')}</SimpleTextPrimary>
+                <SimpleTextSecondary>
+                  {t('exchange.step1.notreq')}
+                  <ArrowRightIcon />
+                </SimpleTextSecondary>
+              </SimpleInput>
+              <Button className="btn-4" isDisabled={!!exchangeErorr} onClick={() => (!exchangeErorr ? setCurrStep(Step.SECOND) : undefined)}><span>{t('exchange.step1.submit')}</span></Button>
+            </Body>
+          </>
         )}
         {(currStep === Step.GET_COIN || currStep === Step.GIVE_COIN) && (
-        <>
-          <Headline>
-            <StepsTitle>Вы отправляете</StepsTitle>
-            <HeadlineIconWrapper onClick={() => setCurrStep(Step.FIRST)}>
-              <CloseIcon />
-            </HeadlineIconWrapper>
-          </Headline>
-          <Body>
-            <SearchInputWrapper
-              isActive={isSearchInputActive}
-            >
-              <LoupeWrapper>
-                <SearchIcon />
-              </LoupeWrapper>
-              <InputSearch
-                type="text"
-                placeholder="Поиск среди токенов по названию"
-                onFocus={() => setIsSearchActive(true)}
-                onBlur={() => setIsSearchActive(false)}
-                value={searchCoinValue}
-                onChange={handleCoinSearch}
-              />
-            </SearchInputWrapper>
-            <CoinsList>
-              {coins.filter((item) => item.title.toLowerCase().includes(searchCoinValue.toLowerCase())
-              || item.shortTitle.toLowerCase().includes(searchCoinValue.toLowerCase())
-              || item.desc.toLowerCase().includes(searchCoinValue.toLowerCase()))
-                .map((item, index) => (
-                  <CoinItem
-                    key={index}
-                    isDisabled={currStep === Step.GET_COIN ? selectedGiveCoin === item : currStep === Step.GIVE_COIN ? selectedGetCoin === item : false}
-                    isActive={item.shortTitle === (currStep === Step.GET_COIN ? selectedGetCoin.shortTitle : selectedGiveCoin.shortTitle)}
-                    onClick={() => hadleChangeCoin(item)}
-                  >
-                    <CoinLiImg src={item.img} />
-                    <CoinDescWrapper>
-                      <CoinLiTitle>
-                        {item.shortTitle}
-                        <CoinLiSpan>{item.title}</CoinLiSpan>
-                      </CoinLiTitle>
-                      <CoinDescText>{item.desc}</CoinDescText>
-                      {(item.swap || item.buysell || item.dex)
-                    && (
-                    <CoinAdditional>
-                      {item.swap
-                      && <CAdditionalItem>Swap</CAdditionalItem>}
-                      {item.buysell
-                      && <CAdditionalItem>Buy/Sell</CAdditionalItem>}
-                      {item.dex
-                      && <CAdditionalItem>DEX</CAdditionalItem>}
-                    </CoinAdditional>
-                    )}
-                    </CoinDescWrapper>
-                    {(item.shortTitle === (currStep === Step.GET_COIN ? selectedGetCoin.shortTitle : selectedGiveCoin.shortTitle))
-                  && (
-                  <CheckIconWrapper>
-                    <CheckIcon />
-                  </CheckIconWrapper>
-                  )}
-                  </CoinItem>
-                ))}
-            </CoinsList>
-          </Body>
-        </>
+          <>
+            <Headline>
+              <StepsTitle>{t('search.title')}</StepsTitle>
+              <HeadlineIconWrapper onClick={() => setCurrStep(Step.FIRST)}>
+                <CloseIcon />
+              </HeadlineIconWrapper>
+            </Headline>
+            <Body>
+              <SearchInputWrapper
+                isActive={isSearchInputActive}
+              >
+                <LoupeWrapper>
+                  <SearchIcon />
+                </LoupeWrapper>
+                <InputSearch
+                  type="text"
+                  placeholder={t('search.inpplace')}
+                  onFocus={() => setIsSearchActive(true)}
+                  onBlur={() => setIsSearchActive(false)}
+                  value={searchCoinValue}
+                  onChange={handleCoinSearch}
+                />
+              </SearchInputWrapper>
+              <CoinsList>
+                {coins.filter((item) => item.title.toLowerCase().includes(searchCoinValue.toLowerCase())
+                  || item.shortTitle.toLowerCase().includes(searchCoinValue.toLowerCase())
+                  || item.desc.toLowerCase().includes(searchCoinValue.toLowerCase()))
+                  .map((item, index) => (
+                    <CoinItem
+                      key={index}
+                      isDisabled={currStep === Step.GET_COIN ? selectedGiveCoin === item : currStep === Step.GIVE_COIN ? selectedGetCoin === item : false}
+                      isActive={item.shortTitle === (currStep === Step.GET_COIN ? selectedGetCoin.shortTitle : selectedGiveCoin.shortTitle)}
+                      onClick={() => hadleChangeCoin(item)}
+                    >
+                      <CoinLiImg src={item.img} />
+                      <CoinDescWrapper>
+                        <CoinLiTitle>
+                          {item.shortTitle}
+                          <CoinLiSpan>{item.title}</CoinLiSpan>
+                        </CoinLiTitle>
+                        <CoinDescText>{item.desc}</CoinDescText>
+                        {(item.swap || item.buysell || item.dex)
+                          && (
+                            <CoinAdditional>
+                              {item.swap
+                                && <CAdditionalItem>Swap</CAdditionalItem>}
+                              {item.buysell
+                                && <CAdditionalItem>Buy/Sell</CAdditionalItem>}
+                              {item.dex
+                                && <CAdditionalItem>DEX</CAdditionalItem>}
+                            </CoinAdditional>
+                          )}
+                      </CoinDescWrapper>
+                      {(item.shortTitle === (currStep === Step.GET_COIN ? selectedGetCoin.shortTitle : selectedGiveCoin.shortTitle))
+                        && (
+                          <CheckIconWrapper>
+                            <CheckIcon />
+                          </CheckIconWrapper>
+                        )}
+                    </CoinItem>
+                  ))}
+              </CoinsList>
+            </Body>
+          </>
         )}
         {(currStep === Step.SECOND || currStep === Step.THIRD) && (
-        <>
-          <Headline>
-            <HeadlineIconWrapper onClick={() => setCurrStep(currStep === Step.SECOND ? Step.FIRST : currStep === Step.THIRD ? Step.SECOND : Step.FIRST)}>
-              <BackIcon />
-            </HeadlineIconWrapper>
-            <StepsWrapper>
-              {currStep === Step.SECOND
-          && <StepsTitle>Введите свой адрес</StepsTitle>}
-              {currStep === Step.THIRD
-          && <StepsTitle>Проверьте детали обмена</StepsTitle>}
-              <StepList>
-                <StepItem isActive />
-                <StepItem isActive />
-                <StepItem isActive={currStep === Step.THIRD} />
-                <StepItem />
-              </StepList>
-            </StepsWrapper>
-            <div style={{ width: '33px', height: '33px' }} />
-          </Headline>
-          <AddressCoinsWrapper>
-            <AddressInfoWrapper>
-              <FromToWrapper>
-                <FromToImgWrapper isTop>
-                  <FromToImg src={selectedGiveCoin.img} />
-                </FromToImgWrapper>
-                ⇅
-                <FromToImgWrapper>
-                  <FromToImg src={selectedGetCoin.img} />
-                </FromToImgWrapper>
-              </FromToWrapper>
-              <FromToDesc>
-                <FromToItem>
-                  {giveAmount}
-                  <span>{selectedGiveCoin.shortTitle}</span>
-                </FromToItem>
-                <FromToItem>
-                  {getAmount}
-                  <span>{selectedGetCoin.shortTitle}</span>
-                </FromToItem>
-              </FromToDesc>
-            </AddressInfoWrapper>
-            {currStep === Step.THIRD
-            && (
-            <Address>
-              <CoinAddress>
-                <img src={selectedGetCoin.img} alt="" />
-                {`Ваш ${selectedGetCoin.shortTitle} адрес для получения средств`}
-              </CoinAddress>
-              <WalletCoinAddress>{walletValue}</WalletCoinAddress>
-            </Address>
-            )}
-          </AddressCoinsWrapper>
-            {currStep === Step.THIRD
-            && (
-            <>
-              <AddEmailWrapper>
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-                  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
-                  <g id="SVGRepo_iconCarrier">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M3.17157 5.17157C2 6.34315 2 8.22876 2 12C2 15.7712 2 17.6569 3.17157 18.8284C4.34315 20 6.22876 20 10 20H14C17.7712 20 19.6569 20 20.8284 18.8284C22 17.6569 22 15.7712 22 12C22 8.22876 22 6.34315 20.8284 5.17157C19.6569 4 17.7712 4 14 4H10C6.22876 4 4.34315 4 3.17157 5.17157ZM18.5762 7.51986C18.8413 7.83807 18.7983 8.31099 18.4801 8.57617L16.2837 10.4066C15.3973 11.1452 14.6789 11.7439 14.0448 12.1517C13.3843 12.5765 12.7411 12.8449 12 12.8449C11.2589 12.8449 10.6157 12.5765 9.95518 12.1517C9.32112 11.7439 8.60271 11.1452 7.71636 10.4066L5.51986 8.57617C5.20165 8.31099 5.15866 7.83807 5.42383 7.51986C5.68901 7.20165 6.16193 7.15866 6.48014 7.42383L8.63903 9.22291C9.57199 10.0004 10.2197 10.5384 10.7666 10.8901C11.2959 11.2306 11.6549 11.3449 12 11.3449C12.3451 11.3449 12.7041 11.2306 13.2334 10.8901C13.7803 10.5384 14.428 10.0004 15.361 9.22291L17.5199 7.42383C17.8381 7.15866 18.311 7.20165 18.5762 7.51986Z" fill="#662bcf" />
-                  </g>
-                </svg>
-                Добавьте email для уведомлений
-                <AddIconWrapper>
-                  <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-                    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
-                    <g id="SVGRepo_iconCarrier">
-                      <path d="M6 12H18M12 6V18" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </g>
-                  </svg>
-                </AddIconWrapper>
-              </AddEmailWrapper>
-              <CheckboxWrapper>
-                <input type="checkbox" checked={isPolicyChecked} onChange={handleCheckPolicy} />
-                <div>
-                  Я прочитал и согласен с
-                  <br />
-                  <Link to="/">
-                    Политикой конфиденциальности,
-                  </Link>
-                  а также
-                  <br />
-                  <Link to="/">
-                    Условиями использования
-                  </Link>
-                </div>
-              </CheckboxWrapper>
-            </>
-            )}
-          { currStep === Step.SECOND
-          && (
           <>
-            <WalletWrapper isFocus={isWalletInputFocus || walletValue.length > 0}>
-              <Label isFocus={isWalletInputFocus || walletValue.length > 0}>{`${selectedGiveCoin.shortTitle} адрес для получения средств`}</Label>
-              <InputWallet isFocus={isWalletInputFocus || walletValue.length > 0} value={walletValue} onChange={handleWalletChange} type="text" onFocus={() => setIsWalletInputFocus(true)} onBlur={() => setIsWalletInputFocus(false)} />
-              {!isWalletInputFocus
-            && (
-            <CopyWallet
-              onClick={() => navigator.clipboard.readText()
-                .then((text) => {
-                  setWalletValue(text);
-                })}
-              isFocus={isWalletInputFocus || walletValue.length > 0}
-            >
-              Вставить
-            </CopyWallet>
-            )}
-            </WalletWrapper>
+            <Headline>
+              <HeadlineIconWrapper onClick={() => setCurrStep(currStep === Step.SECOND ? Step.FIRST : currStep === Step.THIRD ? Step.SECOND : Step.FIRST)}>
+                <BackIcon />
+              </HeadlineIconWrapper>
+              <StepsWrapper>
+                {currStep === Step.SECOND
+                  && <StepsTitle>{t('exchange.step2.title')}</StepsTitle>}
+                {currStep === Step.THIRD
+                  && <StepsTitle>{t('exchange.step3.title')}</StepsTitle>}
+                <StepList>
+                  <StepItem isActive />
+                  <StepItem isActive />
+                  <StepItem isActive={currStep === Step.THIRD} />
+                  <StepItem />
+                </StepList>
+              </StepsWrapper>
+              <div style={{ width: '33px', height: '33px' }} />
+            </Headline>
+            <AddressCoinsWrapper>
+              <AddressInfoWrapper>
+                <FromToWrapper>
+                  <FromToImgWrapper isTop>
+                    <FromToImg src={selectedGiveCoin.img} />
+                  </FromToImgWrapper>
+                  ⇅
+                  <FromToImgWrapper>
+                    <FromToImg src={selectedGetCoin.img} />
+                  </FromToImgWrapper>
+                </FromToWrapper>
+                <FromToDesc>
+                  <FromToItem>
+                    {giveAmount}
+                    <span>{selectedGiveCoin.shortTitle}</span>
+                  </FromToItem>
+                  <FromToItem>
+                    {getAmount}
+                    <span>{selectedGetCoin.shortTitle}</span>
+                  </FromToItem>
+                </FromToDesc>
+              </AddressInfoWrapper>
+              {currStep === Step.THIRD
+                && (
+                  <Address>
+                    <CoinAddress>
+                      <img src={selectedGetCoin.img} alt="" />
+                      {`${t('exchange.step3.your1')} ${selectedGetCoin.shortTitle} ${t('exchange.step3.your2')}`}
+                    </CoinAddress>
+                    <WalletCoinAddress>{walletValue}</WalletCoinAddress>
+                  </Address>
+                )}
+            </AddressCoinsWrapper>
+            {currStep === Step.THIRD
+              && (
+                <>
+                  <AddEmailWrapper>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+                      <g id="SVGRepo_iconCarrier">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M3.17157 5.17157C2 6.34315 2 8.22876 2 12C2 15.7712 2 17.6569 3.17157 18.8284C4.34315 20 6.22876 20 10 20H14C17.7712 20 19.6569 20 20.8284 18.8284C22 17.6569 22 15.7712 22 12C22 8.22876 22 6.34315 20.8284 5.17157C19.6569 4 17.7712 4 14 4H10C6.22876 4 4.34315 4 3.17157 5.17157ZM18.5762 7.51986C18.8413 7.83807 18.7983 8.31099 18.4801 8.57617L16.2837 10.4066C15.3973 11.1452 14.6789 11.7439 14.0448 12.1517C13.3843 12.5765 12.7411 12.8449 12 12.8449C11.2589 12.8449 10.6157 12.5765 9.95518 12.1517C9.32112 11.7439 8.60271 11.1452 7.71636 10.4066L5.51986 8.57617C5.20165 8.31099 5.15866 7.83807 5.42383 7.51986C5.68901 7.20165 6.16193 7.15866 6.48014 7.42383L8.63903 9.22291C9.57199 10.0004 10.2197 10.5384 10.7666 10.8901C11.2959 11.2306 11.6549 11.3449 12 11.3449C12.3451 11.3449 12.7041 11.2306 13.2334 10.8901C13.7803 10.5384 14.428 10.0004 15.361 9.22291L17.5199 7.42383C17.8381 7.15866 18.311 7.20165 18.5762 7.51986Z" fill="#662bcf" />
+                      </g>
+                    </svg>
+                    {t('exchange.step3.email')}
+                    <AddIconWrapper>
+                      <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+                        <g id="SVGRepo_iconCarrier">
+                          <path d="M6 12H18M12 6V18" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </g>
+                      </svg>
+                    </AddIconWrapper>
+                  </AddEmailWrapper>
+                  <CheckboxWrapper>
+                    <input type="checkbox" checked={isPolicyChecked} onChange={handleCheckPolicy} />
+                    <div style={{ display: 'flex', gap: '5px' }}>
+                      {t('exchange.step3.agree1')}
+                      <Link to="/">
+                        {t('exchange.step3.agree2')}
+                      </Link>
+                      {t('exchange.step3.agree3')}
+                      <Link to="/">
+                        {t('exchange.step3.agree4')}
+                      </Link>
+                    </div>
+                  </CheckboxWrapper>
+                </>
+              )}
+            {currStep === Step.SECOND
+              && (
+                <>
+                  <WalletWrapper
+                    isError={!!errors.wallet}
+                    isFocus={isWalletInputFocus}
+                  >
+                    <Label
+                      isError={!!errors.wallet}
+                      isFocus={isWalletInputFocus || walletValue.length > 0}
+                    >
+                      {`${selectedGetCoin.shortTitle} ${t('exchange.step2.label')}`}
+                    </Label>
+                    <InputWallet
+                      {...register(
+                        'wallet',
+                        {
+                          pattern: {
+                            value: selectedGetCoin.regex,
+                            message: t('exchange.step2.walletpattern'),
+                          },
+                        },
+                      )}
+                      isFocus={isWalletInputFocus || walletValue.length > 0}
+                      isError={!!errors.wallet}
+                      type="text"
+                      onFocus={() => setIsWalletInputFocus(true)}
+                      onBlur={() => setIsWalletInputFocus(false)}
+                    />
+                    {!isWalletInputFocus
+                      && (
+                        <CopyWallet
+                          onClick={() => navigator.clipboard.readText()
+                            .then((text) => {
+                              setValue('wallet', text);
+                            })}
+                          isFocus={isWalletInputFocus || walletValue.length > 0}
+                        >
+                          {t('exchange.step2.paste')}
+                        </CopyWallet>
+                      )}
+                  </WalletWrapper>
+                  {errors.wallet && <ErrorText>{errors.wallet.message}</ErrorText>}
 
-            <ReturnAddress>
-              <RefundPart>
-                <RefundPartImg src={selectedGiveCoin.img} />
-                Добавить адрес для возврата средств
-              </RefundPart>
-              <RefundPart>
-                <RefundPartSpan>Не обязательно</RefundPartSpan>
-                <RightArrowIcon />
-              </RefundPart>
-            </ReturnAddress>
+                  <ReturnAddress>
+                    <RefundPart>
+                      <RefundPartImg src={selectedGiveCoin.img} />
+                      {t('exchange.step2.back')}
+                    </RefundPart>
+                    <RefundPart>
+                      <RefundPartSpan>{t('exchange.step2.optional')}</RefundPartSpan>
+                      <RightArrowIcon />
+                    </RefundPart>
+                  </ReturnAddress>
+                </>
+              )}
+            {currStep === Step.SECOND
+              && <Button isDisabled={!!errors.wallet || walletValue.length < 1} onClick={() => setCurrStep(Step.THIRD)}>{t('exchange.step2.submit')}</Button>}
+            {currStep === Step.THIRD
+              && <Button isDisabled={!isPolicyChecked} onClick={() => setCurrStep(Step.FOURTH)}>{t('exchange.step3.submit')}</Button>}
           </>
-          )}
-          {currStep === Step.SECOND
-          && <Button isDisabled={false} onClick={() => setCurrStep(Step.THIRD)}>Дальше</Button>}
-          {currStep === Step.THIRD
-          && <Button isDisabled={!isPolicyChecked} onClick={() => setCurrStep(Step.FOURTH)}>Принять</Button>}
-        </>
         )}
         {currStep === Step.FOURTH && (
-        <>
-          <Headline>
-            <HeadlineTimer>
-              <p>
-                {formattedMinutes}
-                :
-                {formattedSeconds}
-              </p>
-            </HeadlineTimer>
-            <StepsWrapper>
-              <StepsTitle>Внести средства</StepsTitle>
-              <StepList>
-                <StepItem isActive />
-                <StepItem isActive />
-                <StepItem isActive />
-                <StepItem isActive />
-              </StepList>
-            </StepsWrapper>
-            <div style={{ width: '33px', height: '33px' }} />
-          </Headline>
-          <FPrimaryText>
-            Отправьте точную сумму по указанному ниже адресу
-          </FPrimaryText>
-          <FSecondaryText>
-            После 1 подтверждений в сети мы начнем процесс обмена.
-          </FSecondaryText>
-          <FContent>
-            <FInfo>
-              <FCoinWrapper>
-                <FCoinText>
-                  <FCoinImg src={selectedGiveCoin.img} />
-                  <FCoinTitle>
-                    {selectedGiveCoin.shortTitle}
-                    <FCoinSpan>{selectedGiveCoin.title}</FCoinSpan>
-                  </FCoinTitle>
-                </FCoinText>
-                <FCoinPriceWrapper>
-                  <FFlex>
-                    <FCoinPriceDesc>
-                      {giveAmount}
-                      <FCoinPriceSpan>{selectedGiveCoin.shortTitle}</FCoinPriceSpan>
-                    </FCoinPriceDesc>
-                    {giveAmount
-                    && (
-                    <SvgWrapperCopy onClick={() => { navigator.clipboard.writeText(giveAmount); toast.success('Сумма депозита скопирована'); }}>
-                      <CopyIcon />
-                    </SvgWrapperCopy>
-                    )}
-                  </FFlex>
-                </FCoinPriceWrapper>
-              </FCoinWrapper>
-              <QrWrapper src="https://upload.wikimedia.org/wikipedia/commons/6/61/QR_deWP.svg" />
-            </FInfo>
-            <FaFlex>
-              <FAddress>
-                <CoinAddress>
-                  <img src={selectedGiveCoin.img} alt="" />
-                  Адрес для внесения средств
-                </CoinAddress>
-                <WalletCoinAddress>bc1q6ej9zr78r2q866pgh7d5mxhc523afw9wxlwjk3</WalletCoinAddress>
-              </FAddress>
-              <SvgWrapperCopy onClick={() => { navigator.clipboard.writeText('bc1q6ej9zr78r2q866pgh7d5mxhc523afw9wxlwjk3'); toast.success('Адрес для внесения средств скопирован'); }}>
-                <CopyIcon />
-              </SvgWrapperCopy>
-            </FaFlex>
-            <BottomTrD>
-              <span>ID обмена</span>
-              <div>
-                c65084e4c2ab84
-                <SvgWrapperCopy onClick={() => { navigator.clipboard.writeText('c65084e4c2ab84'); toast.success('ID обмена скопирован'); }}>
+          <>
+            <Headline>
+              <HeadlineTimer>
+                <p>
+                  {formattedMinutes}
+                  :
+                  {formattedSeconds}
+                </p>
+              </HeadlineTimer>
+              <StepsWrapper>
+                <StepsTitle>{t('exchange.step4.title')}</StepsTitle>
+                <StepList>
+                  <StepItem isActive />
+                  <StepItem isActive />
+                  <StepItem isActive />
+                  <StepItem isActive />
+                </StepList>
+              </StepsWrapper>
+              <div style={{ width: '33px', height: '33px' }} />
+            </Headline>
+            <FPrimaryText>
+              {t('exchange.step4.title2')}
+            </FPrimaryText>
+            <FSecondaryText>
+              {t('exchange.step4.desc')}
+            </FSecondaryText>
+            <FContent>
+              <FInfo>
+                <FCoinWrapper>
+                  <FCoinText>
+                    <FCoinImg src={selectedGiveCoin.img} />
+                    <FCoinTitle>
+                      {selectedGiveCoin.shortTitle}
+                      <FCoinSpan>{selectedGiveCoin.title}</FCoinSpan>
+                    </FCoinTitle>
+                  </FCoinText>
+                  <FCoinPriceWrapper>
+                    <FFlex>
+                      <FCoinPriceDesc>
+                        {giveAmount}
+                        <FCoinPriceSpan>{selectedGiveCoin.shortTitle}</FCoinPriceSpan>
+                      </FCoinPriceDesc>
+                      {giveAmount
+                        && (
+                          <SvgWrapperCopy onClick={() => { navigator.clipboard.writeText(giveAmount); toast.success(t('exchange.step4.copy1')); }}>
+                            <CopyIcon />
+                          </SvgWrapperCopy>
+                        )}
+                    </FFlex>
+                  </FCoinPriceWrapper>
+                </FCoinWrapper>
+                <QrWrapper src="https://upload.wikimedia.org/wikipedia/commons/6/61/QR_deWP.svg" />
+              </FInfo>
+              <FaFlex>
+                <FAddress>
+                  <CoinAddress>
+                    <img src={selectedGiveCoin.img} alt="" />
+                    {t('exchange.step4.add')}
+                  </CoinAddress>
+                  <WalletCoinAddress>bc1q6ej9zr78r2q866pgh7d5mxhc523afw9wxlwjk3</WalletCoinAddress>
+                </FAddress>
+                <SvgWrapperCopy onClick={() => { navigator.clipboard.writeText('bc1q6ej9zr78r2q866pgh7d5mxhc523afw9wxlwjk3'); toast.success(t('exchange.step4.copy2')); }}>
                   <CopyIcon />
                 </SvgWrapperCopy>
-              </div>
-            </BottomTrD>
-          </FContent>
-          <CancelExchange onClick={() => setCurrStep(Step.FIRST)}>Отменить обмен</CancelExchange>
-        </>
+              </FaFlex>
+              <BottomTrD>
+                <span>{t('exchange.step4.id')}</span>
+                <div>
+                  c65084e4c2ab84
+                  <SvgWrapperCopy onClick={() => { navigator.clipboard.writeText('c65084e4c2ab84'); toast.success(t('exchange.step4.copy3')); }}>
+                    <CopyIcon />
+                  </SvgWrapperCopy>
+                </div>
+              </BottomTrD>
+            </FContent>
+            <CancelExchange onClick={() => setCurrStep(Step.FIRST)}>{t('exchange.step4.cancel')}</CancelExchange>
+          </>
         )}
       </Main>
       <RateUs href="https://trustpilot.com/review/letsexchange.io?utm_medium=trustbox&utm_source=MicroReviewCount">
-        Посмотрите наши
-        <span>327</span>
-        отзывов на
+        {t('exchange.reviews1')}
+        <span>{t('exchange.reviews2')}</span>
+        {t('exchange.reviews3')}
         <svg width="20" height="20" viewBox="0 0 102 94" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: '#04da8d' }} className="styles_star__zugOD"><path fillRule="evenodd" clipRule="evenodd" d="M62.5164 35.7675H101.231L70.0485 57.9374L50.7663 71.535L19.4328 93.7049L31.3335 57.9374L0 35.7675H38.715L50.6157 0L62.5164 35.7675ZM72.6089 66.2137L50.6152 71.6823L81.7981 94L72.6089 66.2137Z" fill="currentColor" /></svg>
         <span>Trustpilot</span>
       </RateUs>
@@ -1399,7 +1447,7 @@ const FromToItem = styled.div`
   }
 `;
 
-const WalletWrapper = styled.div<{ isFocus: boolean }>`
+const WalletWrapper = styled.div<{ isFocus: boolean, isError: boolean }>`
   align-items: center;
   border: 1px solid transparent;
   border-radius: 12px;
@@ -1419,10 +1467,11 @@ const WalletWrapper = styled.div<{ isFocus: boolean }>`
         font-size: 10px !important;
     }
   }
-  ${({ isFocus }) => isFocus && 'background: white; border: 1px solid #662bcf;'}
+  ${({ isFocus, isError }) => isError && !isFocus && 'background: #ffedf1; border: 0px;'}
+  ${({ isFocus, isError }) => isFocus && `background: white; border: 1px solid ${isError ? '#ff3746' : '#662bcf'};`}
 `;
 
-const Label = styled.div<{ isFocus: boolean }>`
+const Label = styled.div<{ isFocus: boolean, isError: boolean }>`
   color: #656870;
   font-size: 16px;
   left: 16px;
@@ -1430,11 +1479,11 @@ const Label = styled.div<{ isFocus: boolean }>`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  ${({ isFocus }) => isFocus && 'font-size: 12px; top: 15px; color: #662bcf;'}
+  ${({ isFocus, isError }) => isFocus && `font-size: 12px; top: 15px; color: ${isError ? '#ff3746' : '#662bcf'};`}
   transition: all .2s ease;
 `;
 
-const InputWallet = styled.input<{ isFocus: boolean }>`
+const InputWallet = styled.input<{ isFocus: boolean, isError: boolean }>`
   position: absolute;
   z-index: 2;
   background: none;
@@ -1637,12 +1686,10 @@ const CheckboxWrapper = styled.div`
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
-    padding: 0 0 0 4px;
   }
 
   div a {
     color: #662bcf;
-    margin: 0px 5px 0px 0px;
   }
 `;
 
@@ -1693,7 +1740,7 @@ const FContent = styled.div`
 
 const FInfo = styled.div`
   border: 2px solid #bef102;
-  border-radius: 16px;
+  border-radius: 11px;
   display: flex;
   flex-direction: row;
   height: 114px;
@@ -1812,4 +1859,14 @@ const BottomTrD = styled.div`
     flex-direction: row;
     gap: 5px;
   }
+`;
+
+const ErrorText = styled.div`
+  margin-top: -12px;
+  border-radius: 15px;
+  color: #d61a28;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 0px 10px;
 `;

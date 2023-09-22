@@ -99,5 +99,55 @@
         "8desc": "The exchange process is clear and transparent, and you can request a receipt with full transaction details.",
         "9": "Feel free to reach out",
         "9desc": "In case of any questions, our support team is here to help 24/7."
+    },
+    "exchange": {
+        "reviews1": "See our",
+        "reviews2": "327",
+        "reviews3": "reviews on",
+        "step1": {
+            "title": "Start exchange",
+            "float": "Floating rate",
+            "fixed": "Fixed rate",
+            "give": "You Send",
+            "get": "You Get",
+            "promocode": "Add a promo code",
+            "notreq": "Optional",
+            "submit": "Exchange"
+        },
+        "step2": {
+            "title": "Enter your address",
+            "label": "receiving address",
+            "paste": "Paste",
+            "back": "Add refund address",
+            "optional": "Optional",
+            "submit": "Next",
+            "walletpattern": "Invalid receiving address for the crypto you've chosen"
+        },
+        "step3": {
+            "title": "Check the exchange details",
+            "email": "Add your email for notification",
+            "your1": "Your",
+            "your2": "receiving address",
+            "agree1": "I have read and agree to the",
+            "agree2": "Privacy Policy",
+            "agree3": "and",
+            "agree4": "Terms of Use",
+            "submit": "Accept"
+        },
+        "step4": {
+            "title": "Deposit",
+            "title2": "Send the exact amount to the address below",
+            "desc": "After 1 network confirmation we will start the exchange process.",
+            "add": "Deposit address",
+            "id": "Exchange ID",
+            "cancel": "Cancel exchange",
+            "copy1": "Deposit amount copied",
+            "copy2": "Deposit address copied",
+            "copy3": "Exchange ID copied"
+        }
+    },
+    "search": {
+        "title": "You Send",
+        "inpplace": "Search among tokens by name"
     }
 }

@@ -9,4 +9,5 @@ export interface Coin {
   dex: boolean;
   min: string;
   max: string;
+  regex: RegExp;
 }
