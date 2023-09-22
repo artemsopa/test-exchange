@@ -121,7 +121,7 @@ const ExchangeWindow: React.FC = () => {
   const { t } = useTranslation();
 
   const {
-    register, setValue, handleSubmit, watch, formState: { errors },
+    register, setValue, watch, formState: { errors },
   } = useForm<{ wallet: string; }>({
     mode: 'onChange',
   });
@@ -279,16 +279,6 @@ const ExchangeWindow: React.FC = () => {
     setSearchCoinValue(value);
   };
 
-  const handleWalletChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setWalletValue(value);
-    // const isValid = validate(value, selectedGetCoin.shortTitle, {
-    //   chainType: '',
-    //   networkType: '',
-    // });
-    // setIsAddressValid(isValid);
-  };
-
   const handleCheckPolicy = () => {
     setIsPolicyChecked(!isPolicyChecked);
   };
@@ -396,7 +386,7 @@ const ExchangeWindow: React.FC = () => {
                   <ArrowRightIcon />
                 </SimpleTextSecondary>
               </SimpleInput>
-              <Button className="btn-4" isDisabled={!!exchangeErorr} onClick={() => (!exchangeErorr ? setCurrStep(Step.SECOND) : undefined)}><span>{t('exchange.step1.submit')}</span></Button>
+              <Button className="btn-4" isDisabled={!!exchangeErorr || !getAmount} onClick={() => (!exchangeErorr ? setCurrStep(Step.SECOND) : undefined)}><span>{t('exchange.step1.submit')}</span></Button>
             </Body>
           </>
         )}
