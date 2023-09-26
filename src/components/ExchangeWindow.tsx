@@ -472,7 +472,7 @@ const ExchangeWindow: React.FC = () => {
                   <ArrowRightIcon />
                 </SimpleTextSecondary>
               </SimpleInput>
-              <Button className="btn-4" isDisabled={!!exchangeErorr || !getAmount || !giveAmount} onClick={() => ((!!exchangeErorr || !getAmount || !giveAmount) ? setCurrStep(Step.SECOND) : undefined)}><span>{t('exchange.step1.submit')}</span></Button>
+              <Button className="btn-4" isDisabled={!!exchangeErorr || !getAmount || Number(giveAmount?.length) < 1} onClick={() => ((!!exchangeErorr || !getAmount || Number(giveAmount?.length) > 0) ? setCurrStep(Step.SECOND) : undefined)}><span>{t('exchange.step1.submit')}</span></Button>
             </Body>
           </>
         )}
