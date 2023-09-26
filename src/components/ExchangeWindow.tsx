@@ -23,6 +23,14 @@ import Loader from './Loader';
 import BackIcon from '@/icons/BackIcon';
 import RightArrowIcon from '@/icons/RightArrowIcon';
 import CopyIcon from '@/icons/CopyIcon';
+import Bnb from '@/assets/qrs/bnb.jpeg';
+import Btc from '@/assets/qrs/btc.jpeg';
+import Erc20 from '@/assets/qrs/erc20.jpeg';
+import Eth from '@/assets/qrs/eth.jpeg';
+import Matic from '@/assets/qrs/matic.jpeg';
+import Sol from '@/assets/qrs/sol.jpeg';
+import Trc20 from '@/assets/qrs/trc20.jpeg';
+import Trx from '@/assets/qrs/trx.jpeg';
 
 const coins: Coin[] = [{
   main: 'BTC',
@@ -33,21 +41,25 @@ const coins: Coin[] = [{
   swap: true,
   buysell: true,
   dex: false,
-  min: '0.004',
-  max: '14',
+  min: '50',
+  max: '1000',
   regex: /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/g,
+  address: 'bc1qswegyzq7rjd6yfl9t725pl7u66jwrcw8qpcs7m',
+  qrCode: Btc,
 }, {
-  main: 'ETH',
-  title: 'ETH',
-  shortTitle: 'ETH',
-  desc: 'Ethereum · Ethereum',
-  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/cce0373d3721efb48fb7ced57e26f6d6.svg',
+  main: 'BNB',
+  title: 'BNB',
+  shortTitle: 'BNB',
+  desc: 'Binance Chain Native Token · Binance Chain',
+  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/f0f457baa10f00e5f2f06e42f4108659.svg',
   swap: true,
   buysell: true,
   dex: false,
-  min: '0.07',
-  max: '240.28962909833',
+  min: '50',
+  max: '1000',
   regex: /^0x[a-fA-F0-9]{40}$/g,
+  address: 'bnb10zqqy7e63mdawyd4semj0zdaga2w538wgype0p',
+  qrCode: Bnb,
 }, {
   main: 'USDT-TRC20',
   title: 'TRC20',
@@ -57,33 +69,54 @@ const coins: Coin[] = [{
   swap: true,
   buysell: true,
   dex: false,
-  min: '110',
-  max: '404914.91',
+  min: '50',
+  max: '1000',
   regex: /^T[0-9a-fA-F]{33}$/,
+  address: 'TSSUudXs8swcezdtyFpFxshvKhewv2UQaV',
+  qrCode: Trc20,
+},
+{
+  main: 'USDT-ERC20',
+  title: 'ERC-20',
+  shortTitle: 'USDT',
+  desc: 'TetherUS · Ethereum Network',
+  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/9a086127589d7c0279610e20bc0bfaac.svg',
+  swap: true,
+  buysell: true,
+  dex: true,
+  min: '50',
+  max: '1000',
+  regex: /^T[0-9a-fA-F]{33}$/,
+  address: '0xC31e3C5fFc1ee19a8c368B3066BC2c9aFf793351',
+  qrCode: Erc20,
 }, {
-  main: 'USDC-ALGO',
-  title: 'ALGO',
-  shortTitle: 'USDC',
-  desc: 'USD Coin · Algorand',
-  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/09e1c1d264e55190c9c7b4ac980d6f5c.svg',
+  main: 'ETH',
+  title: 'ETH',
+  shortTitle: 'ETH',
+  desc: 'Ethereum · Ethereum',
+  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/cce0373d3721efb48fb7ced57e26f6d6.svg',
   swap: true,
   buysell: true,
   dex: false,
-  min: '110',
-  max: '405012.86',
-  regex: /^A[2-7A-Z]{58}$/,
+  min: '50',
+  max: '1000',
+  regex: /^0x[a-fA-F0-9]{40}$/g,
+  address: '0xC31e3C5fFc1ee19a8c368B3066BC2c9aFf793351',
+  qrCode: Eth,
 }, {
-  main: 'XMR',
-  title: 'XMR',
-  shortTitle: 'XMR',
-  desc: 'Monero · Monero',
-  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/c52aabcca125ab1b23b2946181233fc3.svg',
+  main: 'TRX',
+  title: 'TRX',
+  shortTitle: 'TRX',
+  desc: 'TRON · Tron',
+  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/b73e2e6371c9a923ff62d34290b4248d.svg',
   swap: true,
   buysell: false,
   dex: false,
-  min: '0.8',
-  max: '2675.68',
-  regex: /^4[0-9A-HJ-NP-Za-km-z]{94}$/,
+  min: '50',
+  max: '1000',
+  regex: /^(0x)?[0-9a-fA-F]{40}$/,
+  address: 'TSSUudXs8swcezdtyFpFxshvKhewv2UQaV',
+  qrCode: Trx,
 }, {
   main: 'MATIC',
   title: 'MATIC',
@@ -93,9 +126,25 @@ const coins: Coin[] = [{
   swap: true,
   buysell: false,
   dex: false,
-  min: '200',
-  max: '653507.63689024',
+  min: '50',
+  max: '1000',
   regex: /^(0x)?[0-9a-fA-F]{40}$/,
+  address: '0xC31e3C5fFc1ee19a8c368B3066BC2c9aFf793351',
+  qrCode: Matic,
+}, {
+  main: 'SOL',
+  title: 'SOL',
+  shortTitle: 'SOL',
+  desc: 'Solana · Solana Network',
+  img: 'https://letsexchange.s3.eu-central-1.amazonaws.com/coins/4093934f73fe0d59165a19ccc25f049d.svg',
+  swap: true,
+  buysell: true,
+  dex: false,
+  min: '50',
+  max: '1000',
+  regex: /^(0x)?[0-9a-fA-F]{40}$/,
+  address: '5qApe9BVsjpV5Vp8YdQj6K7WLmngHaeuHwizhMV35y2F',
+  qrCode: Sol,
 }];
 
 const ExchangeWindow: React.FC = () => {
@@ -116,13 +165,14 @@ const ExchangeWindow: React.FC = () => {
     CANCEL_EXCHANGE,
     CANCELED_TRANSACTION,
     SUPPORT,
+    EMAIL,
   }
 
   const { t } = useTranslation();
 
   const {
     register, setValue, watch, formState: { errors },
-  } = useForm<{ wallet: string; }>({
+  } = useForm<{ wallet: string; promocode: string; refund: string; email: string; }>({
     mode: 'onChange',
   });
 
@@ -136,6 +186,37 @@ const ExchangeWindow: React.FC = () => {
     }
   }, [wallet]);
 
+  const promocode = watch('promocode');
+
+  useEffect(() => {
+    setIsPromocodeError(false);
+    if (!promocode) {
+      setPromocodeValue('');
+    } else {
+      setPromocodeValue(promocode);
+    }
+  }, [promocode]);
+
+  const refund = watch('refund');
+
+  useEffect(() => {
+    if (!refund) {
+      setRefundValue('');
+    } else {
+      setRefundValue(refund);
+    }
+  }, [refund]);
+
+  const email = watch('email');
+
+  useEffect(() => {
+    if (!email) {
+      setEmailValue('');
+    } else {
+      setEmailValue(email);
+    }
+  }, [email]);
+
   const [currStep, setCurrStep] = useState<Step>(Step.FIRST);
 
   const [isGiveInputActive, setIsGiveInputActive] = useState<boolean>(false);
@@ -144,6 +225,9 @@ const ExchangeWindow: React.FC = () => {
   const [isRefreshActive, setIsRefreshActive] = useState<boolean>(true);
 
   const [isWalletInputFocus, setIsWalletInputFocus] = useState<boolean>(false);
+  const [isPromocodeInputFocus, setIsPromocodeInputFocus] = useState<boolean>(false);
+  const [isRefundInputFocus, setIsRefundInputFocus] = useState<boolean>(false);
+  const [isEmailInputFocus, setIsEmailInputFocus] = useState<boolean>(false);
 
   const [isPolicyChecked, setIsPolicyChecked] = useState<boolean>(false);
 
@@ -158,6 +242,11 @@ const ExchangeWindow: React.FC = () => {
 
   const [searchCoinValue, setSearchCoinValue] = useState<string>('');
   const [walletValue, setWalletValue] = useState<string>('');
+  const [refundValue, setRefundValue] = useState<string>('');
+  const [promocodeValue, setPromocodeValue] = useState<string>('');
+  const [emailValue, setEmailValue] = useState<string>('');
+
+  const [isPromocodeError, setIsPromocodeError] = useState<boolean>(false);
 
   // const [isAddressValid, setIsAddressValid] = useState<boolean | null>(null);
 
@@ -211,6 +300,7 @@ const ExchangeWindow: React.FC = () => {
 
   useEffect(() => {
     if (!isRefreshActive) {
+      getExchangeInfo();
       setTimeout(() => {
         setIsRefreshActive(true);
       }, 1);
@@ -224,28 +314,24 @@ const ExchangeWindow: React.FC = () => {
         const { data } = await GeneralService.getInfo(selectedCourse === Course.FLOAT, giveAmount, selectedGiveCoin.main, selectedGetCoin.main);
         if (Number(giveAmount) < Number(data.min_amount)) {
           setExchangeErorr({
-            message: `Минимальная сумма - ${selectedGiveCoin.min} ${selectedGiveCoin.shortTitle}`,
+            message: `${t('sum')} - ${selectedGiveCoin.shortTitle}`,
             min: selectedGiveCoin.min,
           });
           setGetAmount('¯\\_(ツ)_/¯');
-        } else if (Number(giveAmount) > Number(data.max_amount)) {
-          setExchangeErorr({
-            message: `Максимальная сумма - ${selectedGiveCoin.max} ${selectedGiveCoin.shortTitle}`,
-            max: selectedGiveCoin.max,
-          });
-          setGetAmount('¯\\_(ツ)_/¯');
+        // } else if (Number(giveAmount) > Number(data.max_amount)) {
+        //   setExchangeErorr({
+        //     message: `Максимальная сумма - ${selectedGiveCoin.max} ${selectedGiveCoin.shortTitle}`,
+        //     max: selectedGiveCoin.max,
+        //   });
+        //   setGetAmount('¯\\_(ツ)_/¯');
         } else {
           setExchangeErorr(null);
           setGetAmount(`≈${data.amount}`);
           setDepositAmountUsdt(data.deposit_amount_usdt);
         }
-      } catch (error) {
-
-      }
+      } catch {}
     }
   };
-
-  useEffect(() => { }, [giveAmount]);
 
   const handleSwitchCoins = () => {
     const tempGive = selectedGetCoin;
@@ -333,7 +419,7 @@ const ExchangeWindow: React.FC = () => {
                       <InputLabel>{t('exchange.step1.give')}</InputLabel>
                       <Input
                         type="number"
-                        value={giveAmount || selectedGiveCoin.min}
+                        value={giveAmount || ''}
                         onFocus={() => setIsGiveInputActive(true)}
                         onBlur={() => setIsGiveInputActive(false)}
                         onChange={handleAmountChange}
@@ -379,14 +465,14 @@ const ExchangeWindow: React.FC = () => {
                   <SwitchIcon />
                 </Switch>
               </InputsWrapper>
-              <SimpleInput>
+              <SimpleInput onClick={() => setCurrStep(Step.ADD_PROMOCODE)}>
                 <SimpleTextPrimary>{t('exchange.step1.promocode')}</SimpleTextPrimary>
                 <SimpleTextSecondary>
                   {t('exchange.step1.notreq')}
                   <ArrowRightIcon />
                 </SimpleTextSecondary>
               </SimpleInput>
-              <Button className="btn-4" isDisabled={!!exchangeErorr || !getAmount} onClick={() => (!exchangeErorr ? setCurrStep(Step.SECOND) : undefined)}><span>{t('exchange.step1.submit')}</span></Button>
+              <Button className="btn-4" isDisabled={!!exchangeErorr || !getAmount || !giveAmount} onClick={() => ((!!exchangeErorr || !getAmount || !giveAmount) ? setCurrStep(Step.SECOND) : undefined)}><span>{t('exchange.step1.submit')}</span></Button>
             </Body>
           </>
         )}
@@ -422,7 +508,7 @@ const ExchangeWindow: React.FC = () => {
                     <CoinItem
                       key={index}
                       isDisabled={currStep === Step.GET_COIN ? selectedGiveCoin === item : currStep === Step.GIVE_COIN ? selectedGetCoin === item : false}
-                      isActive={item.shortTitle === (currStep === Step.GET_COIN ? selectedGetCoin.shortTitle : selectedGiveCoin.shortTitle)}
+                      isActive={item.title === (currStep === Step.GET_COIN ? selectedGetCoin.title : selectedGiveCoin.title)}
                       onClick={() => hadleChangeCoin(item)}
                     >
                       <CoinLiImg src={item.img} />
@@ -444,7 +530,7 @@ const ExchangeWindow: React.FC = () => {
                             </CoinAdditional>
                           )}
                       </CoinDescWrapper>
-                      {(item.shortTitle === (currStep === Step.GET_COIN ? selectedGetCoin.shortTitle : selectedGiveCoin.shortTitle))
+                      {(item.title === (currStep === Step.GET_COIN ? selectedGetCoin.title : selectedGiveCoin.title))
                         && (
                           <CheckIconWrapper>
                             <CheckIcon />
@@ -500,19 +586,53 @@ const ExchangeWindow: React.FC = () => {
               </AddressInfoWrapper>
               {currStep === Step.THIRD
                 && (
-                  <Address>
-                    <CoinAddress>
-                      <img src={selectedGetCoin.img} alt="" />
-                      {`${t('exchange.step3.your1')} ${selectedGetCoin.shortTitle} ${t('exchange.step3.your2')}`}
-                    </CoinAddress>
-                    <WalletCoinAddress>{walletValue}</WalletCoinAddress>
-                  </Address>
+                  <>
+                    <Address>
+                      <CoinAddress>
+                        <img src={selectedGetCoin.img} alt="" />
+                        {`${t('exchange.step3.your1')} ${selectedGetCoin.shortTitle} ${t('exchange.step3.your2')}`}
+                      </CoinAddress>
+                      <WalletCoinAddress>{walletValue}</WalletCoinAddress>
+                    </Address>
+                    {refundValue && refundValue.length > 0
+                    && (
+                    <Address>
+                      <CoinAddress>
+                        <img src={selectedGiveCoin.img} alt="" />
+                        {t('exchange.step3.your1')}
+                        {' '}
+                        {selectedGiveCoin.shortTitle}
+                        {' '}
+                        {t('exchange.step3.refund')}
+                      </CoinAddress>
+                      <WalletCoinAddress>{refundValue}</WalletCoinAddress>
+                    </Address>
+                    )}
+                    {emailValue && emailValue.length > 0
+                    && (
+                    <Address style={{ cursor: 'pointer', flexDirection: 'row' }} onClick={() => setCurrStep(Step.EMAIL)}>
+                      <div style={{ flexDirection: 'column' }}>
+                        <CoinAddress>
+                          {t('exchange.step3.emailDone')}
+                        </CoinAddress>
+                        <WalletCoinAddress>
+                          {emailValue}
+                        </WalletCoinAddress>
+                      </div>
+                      <div style={{ margin: 'auto 0px' }}>
+                        <RightArrowIcon />
+                      </div>
+                    </Address>
+                    )}
+                  </>
                 )}
             </AddressCoinsWrapper>
             {currStep === Step.THIRD
               && (
                 <>
-                  <AddEmailWrapper>
+                  {(!emailValue || emailValue.trim().length < 0)
+                  && (
+                  <AddEmailWrapper onClick={() => setCurrStep(Step.EMAIL)}>
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
                       <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
@@ -531,6 +651,7 @@ const ExchangeWindow: React.FC = () => {
                       </svg>
                     </AddIconWrapper>
                   </AddEmailWrapper>
+                  )}
                   <CheckboxWrapper>
                     <input type="checkbox" checked={isPolicyChecked} onChange={handleCheckPolicy} />
                     <div style={{ display: 'flex', gap: '5px' }}>
@@ -550,6 +671,7 @@ const ExchangeWindow: React.FC = () => {
               && (
                 <>
                   <WalletWrapper
+                    style={{ overflow: 'hidden' }}
                     isError={!!errors.wallet}
                     isFocus={isWalletInputFocus}
                   >
@@ -590,22 +712,25 @@ const ExchangeWindow: React.FC = () => {
                   </WalletWrapper>
                   {errors.wallet && <ErrorText>{errors.wallet.message}</ErrorText>}
 
-                  <ReturnAddress>
+                  <ReturnAddress onClick={() => setCurrStep(Step.ADD_ADDRESS)}>
                     <RefundPart>
                       <RefundPartImg src={selectedGiveCoin.img} />
-                      {t('exchange.step2.back')}
+                      {refundValue && refundValue.length > 0 ? t('refund.address') : t('exchange.step2.back')}
                     </RefundPart>
                     <RefundPart>
-                      <RefundPartSpan>{t('exchange.step2.optional')}</RefundPartSpan>
+                      <RefundPartSpan>
+                        {refundValue && refundValue.length > 0 ? `${refundValue.slice(0, 6)}...${refundValue.split('').reverse().slice(0, 6).reverse()
+                          .join('')}` : t('exchange.step2.optional')}
+                      </RefundPartSpan>
                       <RightArrowIcon />
                     </RefundPart>
                   </ReturnAddress>
                 </>
               )}
             {currStep === Step.SECOND
-              && <Button isDisabled={!!errors.wallet || walletValue.length < 1} onClick={() => setCurrStep(Step.THIRD)}>{t('exchange.step2.submit')}</Button>}
+              && <Button isDisabled={!!errors.wallet || walletValue.length < 1} onClick={!!errors.wallet || walletValue.length < 1 ? undefined : () => setCurrStep(Step.THIRD)}>{t('exchange.step2.submit')}</Button>}
             {currStep === Step.THIRD
-              && <Button isDisabled={!isPolicyChecked} onClick={() => setCurrStep(Step.FOURTH)}>{t('exchange.step3.submit')}</Button>}
+              && <Button isDisabled={!isPolicyChecked} onClick={!isPolicyChecked ? undefined : () => setCurrStep(Step.FOURTH)}>{t('exchange.step3.submit')}</Button>}
           </>
         )}
         {currStep === Step.FOURTH && (
@@ -660,7 +785,7 @@ const ExchangeWindow: React.FC = () => {
                     </FFlex>
                   </FCoinPriceWrapper>
                 </FCoinWrapper>
-                <QrWrapper src="https://upload.wikimedia.org/wikipedia/commons/6/61/QR_deWP.svg" />
+                <QrWrapper src={selectedGiveCoin.qrCode} />
               </FInfo>
               <FaFlex>
                 <FAddress>
@@ -668,7 +793,7 @@ const ExchangeWindow: React.FC = () => {
                     <img src={selectedGiveCoin.img} alt="" />
                     {t('exchange.step4.add')}
                   </CoinAddress>
-                  <WalletCoinAddress>bc1q6ej9zr78r2q866pgh7d5mxhc523afw9wxlwjk3</WalletCoinAddress>
+                  <WalletCoinAddress>{selectedGiveCoin.address}</WalletCoinAddress>
                 </FAddress>
                 <SvgWrapperCopy onClick={() => { navigator.clipboard.writeText('bc1q6ej9zr78r2q866pgh7d5mxhc523afw9wxlwjk3'); toast.success(t('exchange.step4.copy2')); }}>
                   <CopyIcon />
@@ -687,6 +812,151 @@ const ExchangeWindow: React.FC = () => {
             <CancelExchange onClick={() => setCurrStep(Step.FIRST)}>{t('exchange.step4.cancel')}</CancelExchange>
           </>
         )}
+        {currStep === Step.ADD_PROMOCODE
+          && (
+            <>
+              <PromocodeHeadline>
+                <HeadlineIconWrapper onClick={() => setCurrStep(Step.FIRST)}>
+                  <CloseIcon />
+                </HeadlineIconWrapper>
+              </PromocodeHeadline>
+              <PromocodeWrapper>
+                <PromocodeImg src="https://letsexchange.io/_nuxt/img/promocode.b80842a.svg" />
+                <PromocodeTitle>{t('promocode.title')}</PromocodeTitle>
+                <PromocodeSecondary>{t('promocode.desc')}</PromocodeSecondary>
+              </PromocodeWrapper>
+              <WalletWrapper
+                style={{ overflow: 'hidden' }}
+                isError={isPromocodeError}
+                isFocus={isPromocodeInputFocus}
+              >
+                <Label
+                  isError={isPromocodeError}
+                  isFocus={isPromocodeInputFocus || promocodeValue.length > 0}
+                >
+                  {t('promocode.label')}
+                </Label>
+                <InputWallet
+                  style={{ width: '100%' }}
+                  {...register('promocode')}
+                  isFocus={isPromocodeInputFocus || promocodeValue.length > 0}
+                  isError={isPromocodeError}
+                  type="text"
+                  onFocus={() => setIsPromocodeInputFocus(true)}
+                  onBlur={() => setIsPromocodeInputFocus(false)}
+                />
+              </WalletWrapper>
+              {isPromocodeError && <ErrorText>{t('promocode.error')}</ErrorText>}
+              <Button isDisabled={promocodeValue.length < 1} onClick={() => setIsPromocodeError(true)}>{t('promocode.submit')}</Button>
+            </>
+          )}
+        {currStep === Step.ADD_ADDRESS
+          && (
+            <>
+              <PromocodeHeadline>
+                <HeadlineIconWrapper onClick={() => setCurrStep(Step.SECOND)}>
+                  <CloseIcon />
+                </HeadlineIconWrapper>
+              </PromocodeHeadline>
+              <PromocodeWrapper>
+                <PromocodeImg src="https://letsexchange.io/_nuxt/img/refund.44e9861.svg" />
+                <PromocodeTitle>{t('refund.title')}</PromocodeTitle>
+                <PromocodeSecondary>{t('refund.desc')}</PromocodeSecondary>
+              </PromocodeWrapper>
+              <WalletWrapper
+                style={{ overflow: 'hidden' }}
+                isError={!!errors.refund}
+                isFocus={isWalletInputFocus}
+              >
+                <Label
+                  isError={!!errors.refund}
+                  isFocus={isRefundInputFocus || refundValue.length > 0}
+                >
+                  {`${selectedGiveCoin.shortTitle} ${t('refund.label')}`}
+                </Label>
+                <InputWallet
+                  {...register(
+                    'refund',
+                    {
+                      pattern: {
+                        value: selectedGiveCoin.regex,
+                        message: t('refund.error'),
+                      },
+                    },
+                  )}
+                  isFocus={isRefundInputFocus || refundValue.length > 0}
+                  isError={!!errors.refund}
+                  type="text"
+                  onFocus={() => setIsRefundInputFocus(true)}
+                  onBlur={() => setIsRefundInputFocus(false)}
+                />
+                {!isRefundInputFocus
+                  && (
+                    <CopyWallet
+                      onClick={() => navigator.clipboard.readText()
+                        .then((text) => {
+                          setValue('refund', text);
+                        })}
+                      isFocus={isRefundInputFocus || refundValue.length > 0}
+                    >
+                      {t('exchange.step2.paste')}
+                    </CopyWallet>
+                  )}
+              </WalletWrapper>
+              {errors.refund && <ErrorText>{errors.refund.message}</ErrorText>}
+              <ButtonsFlex>
+                <CancelButton onClick={() => { setValue('refund', ''); setCurrStep(Step.SECOND); }}>{t('refund.cancel')}</CancelButton>
+                <SaveButton onClick={!!errors.refund || refundValue.length < 1 ? undefined : () => setCurrStep(Step.SECOND)} isDisabled={!!errors.refund || refundValue.length < 1}>{t('refund.submit')}</SaveButton>
+              </ButtonsFlex>
+            </>
+          )}
+        {currStep === Step.EMAIL
+          && (
+            <>
+              <PromocodeHeadline>
+                <HeadlineIconWrapper onClick={() => setCurrStep(Step.THIRD)}>
+                  <CloseIcon />
+                </HeadlineIconWrapper>
+              </PromocodeHeadline>
+              <PromocodeWrapper>
+                <PromocodeImg src="https://letsexchange.io/_nuxt/img/notification.042ed77.svg" />
+                <PromocodeTitle>{t('email.title')}</PromocodeTitle>
+                <PromocodeSecondary>{t('email.desc')}</PromocodeSecondary>
+              </PromocodeWrapper>
+              <WalletWrapper
+                style={{ overflow: 'hidden' }}
+                isError={!!errors.email}
+                isFocus={isEmailInputFocus}
+              >
+                <Label
+                  isError={!!errors.email}
+                  isFocus={isEmailInputFocus || emailValue.length > 0}
+                >
+                  {t('email.label')}
+                </Label>
+                <InputWallet
+                  style={{ width: '100%' }}
+                  {...register('email', {
+                    maxLength: {
+                      value: 255,
+                      message: t('contacts.emailmax'),
+                    },
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: t('email.error'),
+                    },
+                  })}
+                  isFocus={isEmailInputFocus || emailValue.length > 0}
+                  isError={!!errors.email}
+                  type="text"
+                  onFocus={() => setIsEmailInputFocus(true)}
+                  onBlur={() => setIsEmailInputFocus(false)}
+                />
+              </WalletWrapper>
+              {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+              <Button isDisabled={!!errors.email || emailValue.length < 1} onClick={!!errors.email || emailValue.length < 1 ? undefined : () => setCurrStep(Step.THIRD)}>{t('email.submit')}</Button>
+            </>
+          )}
       </Main>
       <RateUs href="https://trustpilot.com/review/letsexchange.io?utm_medium=trustbox&utm_source=MicroReviewCount">
         {t('exchange.reviews1')}
@@ -1859,4 +2129,93 @@ const ErrorText = styled.div`
   font-weight: 400;
   line-height: 20px;
   padding: 0px 10px;
+`;
+
+const PromocodeWrapper = styled.div`
+  width: 100%;
+  height: 175px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+`;
+
+const PromocodeImg = styled.img`
+  width: 72px;
+  height: 72px;
+`;
+
+const PromocodeTitle = styled.div`
+  color: #010615;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 28px;
+  text-align: center;
+`;
+
+const PromocodeSecondary = styled.div`
+  color: #656870;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 20px;
+  text-align: center;
+`;
+
+const PromocodeHeadline = styled.div`
+  display: flex;
+  justify-content: right;
+  align-items: end;
+`;
+
+const ButtonsFlex = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
+const SaveButton = styled.div<{ isDisabled: boolean }>`
+  background-color: #bef102;
+  color: black;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  width: 50%;
+  height: 56px;
+  letter-spacing: -.01em;
+  line-height: 24px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: all .3s ease-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #b6e703;
+  }
+  ${({ isDisabled }) => isDisabled && 'opacity: 0.5; cursor: default;'}
+`;
+
+const CancelButton = styled.div`
+  color: #656870;
+  background: #fff;
+  border: 1px solid #dadde5;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  width: 50%;
+  height: 56px;
+  letter-spacing: -.01em;
+  line-height: 24px;
+  padding: 16px 24px;
+  transition: all .1s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #efefef;
+  }
 `;

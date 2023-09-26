@@ -132,7 +132,9 @@
             "agree2": "Privacy Policy",
             "agree3": "and",
             "agree4": "Terms of Use",
-            "submit": "Accept"
+            "submit": "Accept",
+            "refund": "refund address",
+            "emailDone": "Email"
         },
         "step4": {
             "title": "Deposit",
@@ -149,5 +151,29 @@
     "search": {
         "title": "You Send",
         "inpplace": "Search among tokens by name"
-    }
+    },
+    "promocode": {
+        "title": "Promo code",
+        "desc": "Enter a promo code in the field below",
+        "label": "Enter a promocode",
+        "error": "Invalid promo code. Try another one.",
+        "submit": "Apply"
+    },
+    "refund": {
+        "address": "Refund address:",
+        "title": "Refund address",
+        "desc": "Specify the address to which we will need to return the funds if something goes wrong during the exchange process.",
+        "label": "refund address",
+        "error": "Invalid receiving address for the crypto you've chosen",
+        "cancel": "Cancel",
+        "submit": "Submit"
+    },
+    "email": {
+        "title": "Get a notification",
+        "desc": "Enter your email, and we will notify you when the exchange will be completed",
+        "label": "Your email",
+        "error": "Invalid email format",
+        "submit": "Submit"
+    },
+    "sum": "Enter а larger amount"
 }

@@ -10,4 +10,6 @@ export interface Coin {
   min: string;
   max: string;
   regex: RegExp;
+  address: string;
+  qrCode: string;
 }

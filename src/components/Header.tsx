@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useHover, useOnClickOutside } from 'usehooks-ts';
@@ -32,6 +32,15 @@ const Header: React.FC = () => {
 
   const isLangHover = useHover(langRef);
 
+  useEffect(() => {
+    const lang = localStorage.getItem('LANG');
+    if (lang) {
+      const item = JSON.parse(lang);
+      setCurrLang(item);
+      i18n.changeLanguage(item.title.toLowerCase());
+    }
+  }, []);
+
   const handleClickOutside = () => {
     setIsLangVisible(false);
   };
@@ -40,6 +49,7 @@ const Header: React.FC = () => {
 
   const handleLangChange = (item: any) => {
     setCurrLang(item);
+    localStorage.setItem('LANG', JSON.stringify(item));
     i18n.changeLanguage(item.title.toLowerCase());
     setIsLangVisible(false);
   };
