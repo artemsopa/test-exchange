@@ -59,7 +59,7 @@ const AboutUs: React.FC = () => {
     <DefaultLayout>
       <Main>
         <Path>
-          <PathHref to="/">LetsExchange</PathHref>
+          <PathHref to="/">PlaceExchange</PathHref>
           <>/</>
           <div>{t('aboutus.mainTitle')}</div>
         </Path>

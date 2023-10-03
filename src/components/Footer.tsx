@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useTranslation } from 'react-i18next';
-import Logo from '@/assets/logo.svg';
+import Logo from '@/assets/logo.png';
 import TrustPilot from '@/assets/trust_pilot.svg';
 
 const logos = [{

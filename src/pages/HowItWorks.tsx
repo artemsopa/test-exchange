@@ -68,7 +68,7 @@ const HowItWorks: React.FC = () => {
     <DefaultLayout>
       <Main>
         <Path>
-          <PathHref to="/">LetsExchange</PathHref>
+          <PathHref to="/">PlaceExchange</PathHref>
           <>/</>
           <div>{t('how.title')}</div>
         </Path>

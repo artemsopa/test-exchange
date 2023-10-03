@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useHover, useOnClickOutside } from 'usehooks-ts';
 
 import { useTranslation } from 'react-i18next';
-import Logo from '@/assets/logo.svg';
+import Logo from '@/assets/logo.png';
 import ArrowDownIcon from '@/icons/ArrowDownIcon';
 
 const langsList = [

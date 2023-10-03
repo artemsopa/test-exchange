@@ -27,7 +27,7 @@ const ContactUs: React.FC = () => {
     <DefaultLayout>
       <Main>
         <Path>
-          <PathHref to="/">LetsExchange</PathHref>
+          <PathHref to="/">PlaceExchange</PathHref>
           <>/</>
           <div>{t('contacts.title')}</div>
         </Path>
