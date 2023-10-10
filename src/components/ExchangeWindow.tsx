@@ -326,7 +326,11 @@ const ExchangeWindow: React.FC = () => {
         //   setGetAmount('¯\\_(ツ)_/¯');
         } else {
           setExchangeErorr(null);
-          setGetAmount(`≈${data.amount}`);
+          if (selectedCourse === Course.FIXED) {
+            setGetAmount(`≈${Number(data.amount) + (Number(data.amount) * 0.05)}`);
+          } else {
+            setGetAmount(`≈${(Number(data.amount) + (Number(data.amount) * 0.05)).toFixed(2)}`);
+          }
           setDepositAmountUsdt(data.deposit_amount_usdt);
         }
       } catch {}
@@ -958,7 +962,7 @@ const ExchangeWindow: React.FC = () => {
             </>
           )}
       </Main>
-      <RateUs href="https://trustpilot.com/review/letsexchange.io?utm_medium=trustbox&utm_source=MicroReviewCount">
+      <RateUs href="https://trustpilot.com/">
         {t('exchange.reviews1')}
         <span>{t('exchange.reviews2')}</span>
         {t('exchange.reviews3')}

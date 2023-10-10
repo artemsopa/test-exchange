@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
             <SecondaryText>
               {t('footer.desc')}
             </SecondaryText>
-            <TrustHref href="https://www.trustpilot.com/evaluate/letsexchange.io">
+            <TrustHref href="https://www.trustpilot.com/">
               <TrustImg src={TrustPilot} />
             </TrustHref>
           </SubscribeForm>
@@ -159,7 +159,7 @@ const Content = styled.div`
 `;
 
 const LogoImgWrapper = styled(Link)`
-  width: 204px;
+  width: 200px;
   transition: transform .2s;
   &:hover {
     transform: scale(1.1);

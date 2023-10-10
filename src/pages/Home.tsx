@@ -119,6 +119,6 @@ const CellSpan = styled.span`
 const CoinsImg = styled.img`
   position: absolute;
   width: 100%;
-  bottom: -10px;
+  bottom: -8px;
   z-index: 1;
 `;

@@ -99,7 +99,7 @@ const Main = styled.div`
 `;
 
 const LogoImgWrapper = styled(Link)`
-  width: 204px;
+  width: 200px;
   transition: transform .2s;
   &:hover {
     transform: scale(1.1);
